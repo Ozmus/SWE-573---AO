@@ -1,8 +1,9 @@
-package com.example.communityapplication.service;
+package com.example.communityapplication.service.impl;
 
 import com.example.communityapplication.model.User;
 import com.example.communityapplication.dao.UserDao;
 import com.example.communityapplication.model.UserRole;
+import com.example.communityapplication.service.UserService;
 import com.example.communityapplication.user.WebUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

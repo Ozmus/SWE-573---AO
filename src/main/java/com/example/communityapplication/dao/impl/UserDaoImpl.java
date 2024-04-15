@@ -1,5 +1,6 @@
-package com.example.communityapplication.dao;
+package com.example.communityapplication.dao.impl;
 
+import com.example.communityapplication.dao.UserDao;
 import com.example.communityapplication.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -20,7 +21,6 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User findByUserName(String theUserName) {
 
-		// retrieve/read from database using username
 		TypedQuery<User> theQuery = entityManager.createQuery("from User where userName=:uName", User.class);
 		theQuery.setParameter("uName", theUserName);
 
@@ -37,10 +37,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	@Transactional
 	public void save(User theUser) {
-
-		// create the user ... finally LOL
 		entityManager.merge(theUser);
 	}
-
 
 }

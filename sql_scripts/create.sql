@@ -24,6 +24,7 @@ CREATE TABLE `communities` (
                         `name` varchar(50) NOT NULL,
                         `description` varchar(2500) NOT NULL,
                         `image_url` varchar(100) NOT NULL,
+                        `is_archived` boolean NOT NULL DEFAULT false,
                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
