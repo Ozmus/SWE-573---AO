@@ -40,6 +40,10 @@ public class Community {
         this.image_url = image_url;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
