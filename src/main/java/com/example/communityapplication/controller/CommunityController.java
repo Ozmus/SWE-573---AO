@@ -41,8 +41,13 @@ public class CommunityController {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-	}	
-	
+	}
+
+	@GetMapping("/showCommunityPage")
+	public String showCommunityPage() {
+		return "community/community-page";
+	}
+
 	@GetMapping("/showCreateCommunityForm")
 	public String showCreateCommunityForm(Model theModel) {
 		
@@ -84,6 +89,6 @@ public class CommunityController {
         
         logger.info("Successfully created community: " + communityName);
 
-        return "home";
+        return "community/community-page";
 	}
 }
