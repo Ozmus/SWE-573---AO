@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding-top: 60px; /* Offset for the fixed navbar */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .community-image {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .community-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .community-description {
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div th:replace="navbar.html"></div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div th:if="${community}">
+                    <img th:src="${community.image_url}" alt="Community Image" class="community-image">
+                    <h2 th:text="${community.name}" class="community-name"></h2>
+                    <p th:text="${community.description}" class="community-description"></p>
+                    <a th:href="@{/community}" class="btn btn-primary back-button">Back to Community</a>
+                </div>
+                <div th:unless="${community}">
+                    <p>Community not found</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Qv0E6hOPPIh65YY1knT1/Gt8sswihPk9z9BA80clS0Nwt5XK+j5k/OFFfTZN4MWt"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

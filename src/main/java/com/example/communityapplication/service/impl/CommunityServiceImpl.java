@@ -6,6 +6,8 @@ import com.example.communityapplication.service.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
@@ -19,11 +21,16 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public Community getByCommunityName(String name) {
-		return communityDao.findByCommunityName(name);
+		return this.communityDao.findByCommunityName(name);
+	}
+
+	@Override
+	public List<Community> getAllCommunities() {
+		return this.communityDao.findAllCommunities();
 	}
 
 	@Override
 	public void save(Community community) {
-		communityDao.save(community);
+		this.communityDao.save(community);
 	}
 }

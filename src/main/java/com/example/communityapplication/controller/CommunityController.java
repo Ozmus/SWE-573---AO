@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
@@ -43,12 +44,19 @@ public class CommunityController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
-	@GetMapping("/showCommunityPage")
-	public String showCommunityPage() {
+	@GetMapping()
+	public String showCommunityPage(Model theModel) {
+		List<Community> communities = communityService.getAllCommunities();
+		theModel.addAttribute("communities", communities);
 		return "community/community-page";
 	}
-
-	@GetMapping("/showCreateCommunityForm")
+	@GetMapping("/details")
+	public String showCommunityDetails(@RequestParam("name") String name, Model theModel) {
+		Community community = communityService.getByCommunityName(name);
+		theModel.addAttribute("community", community);
+		return "community/community-details";
+	}
+	@GetMapping("/create")
 	public String showCreateCommunityForm(Model theModel) {
 		
 		theModel.addAttribute("newCommunity", new Community("", "", "", false));

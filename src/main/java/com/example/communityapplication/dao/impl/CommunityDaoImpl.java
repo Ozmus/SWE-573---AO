@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public class CommunityDaoImpl implements CommunityDao {
 
@@ -32,6 +34,19 @@ public class CommunityDaoImpl implements CommunityDao {
 		}
 
 		return theCommunity;
+	}
+
+	@Override
+	public List<Community> findAllCommunities() {
+		TypedQuery<Community> theQuery = entityManager.createQuery("from Community", Community.class);
+
+		List<Community> theCommunities = null;
+		try {
+			theCommunities = theQuery.getResultList();
+		} catch (Exception e) {
+			theCommunities = null;
+		}
+		return theCommunities;
 	}
 
 	@Override
