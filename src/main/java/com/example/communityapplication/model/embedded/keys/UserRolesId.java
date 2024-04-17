@@ -9,21 +9,21 @@ import java.io.Serializable;
 public class UserRolesId implements Serializable {
 
     @Column(name = "user_id")
-    private int userId;
+    private long userId;
 
     @Column(name = "community_id")
-    private int communityId;
+    private long communityId;
 
     // Constructors, getters, and setters
     public UserRolesId() {}
 
-    public UserRolesId(int userId, int communityId) {
+    public UserRolesId(long userId, long communityId) {
         this.userId = userId;
         this.communityId = communityId;
     }
 
     // Getters and setters
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
@@ -31,7 +31,7 @@ public class UserRolesId implements Serializable {
         this.userId = userId;
     }
 
-    public int getCommunityId() {
+    public long getCommunityId() {
         return communityId;
     }
 
