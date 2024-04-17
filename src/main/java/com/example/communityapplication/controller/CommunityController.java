@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
@@ -27,12 +28,10 @@ public class CommunityController {
 	private Logger logger = Logger.getLogger(getClass().getName());
 
     private CommunityService communityService;
-	private UserRoleService userRoleService;
 
 	@Autowired
-	public CommunityController(CommunityService communityService, UserRoleService userRoleService) {
+	public CommunityController(CommunityService communityService) {
 		this.communityService = communityService;
-		this.userRoleService = userRoleService;
 	}
 
 	@InitBinder
@@ -43,12 +42,19 @@ public class CommunityController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
-	@GetMapping("/showCommunityPage")
-	public String showCommunityPage() {
+	@GetMapping()
+	public String showCommunityPage(Model theModel) {
+		List<Community> communities = communityService.getAllCommunities();
+		theModel.addAttribute("communities", communities);
 		return "community/community-page";
 	}
-
-	@GetMapping("/showCreateCommunityForm")
+	@GetMapping("/details")
+	public String showCommunityDetails(@RequestParam("name") String name, Model theModel) {
+		Community community = communityService.getByCommunityName(name);
+		theModel.addAttribute("community", community);
+		return "community/community-details";
+	}
+	@GetMapping("/create")
 	public String showCreateCommunityForm(Model theModel) {
 		
 		theModel.addAttribute("newCommunity", new Community("", "", "", false));
@@ -69,9 +75,7 @@ public class CommunityController {
 			 return "community/community-form";
 		 }
 
-		// check the database if community already exists
-        Community existing = communityService.getByCommunityName(communityName);
-        if (existing != null){
+        if (communityService.isExist(communityName)){
         	theModel.addAttribute("newCommunity", new Community("", "", "", false));
 			theModel.addAttribute("communityCreationError", "Community name already exists.");
 
@@ -80,13 +84,8 @@ public class CommunityController {
         }
         
         // save community
-        communityService.save(theCommunity);
+        communityService.createCommunity(theCommunity, (User)session.getAttribute("user"));
 
-		//create owner relationship
-		User currentUser = (User)session.getAttribute("user");
-		Community createdCommunity = communityService.getByCommunityName(theCommunity.getName());
-		userRoleService.save(new UserRole(new UserRolesId(currentUser.getId(), createdCommunity.getId()), Role.OWNER));
-        
         logger.info("Successfully created community: " + communityName);
 
         return "community/community-page";
