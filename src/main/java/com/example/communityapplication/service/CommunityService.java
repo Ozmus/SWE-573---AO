@@ -1,11 +1,13 @@
 package com.example.communityapplication.service;
 
 import com.example.communityapplication.model.Community;
+import com.example.communityapplication.model.User;
 
 import java.util.List;
 
 public interface CommunityService {
     public Community getByCommunityName(String name);
     public List<Community> getAllCommunities();
-    void save(Community community);
+    void createCommunity(Community community, User currentUser);
+    boolean isExist(String name);
 }
