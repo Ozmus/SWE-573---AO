@@ -37,7 +37,7 @@
 <div th:replace="navbar.html"></div>
 <br>
 <div class="container">
-    <h2 class="page-title">Welcome to the Community Hub Home Page</h2>
+    <a th:href="@{/postForm}" class="btn btn-primary mb-4">Post</a>
 
     <form action="#" th:action="@{/logout}" method="POST">
         <input type="submit" value="Logout" class="btn btn-outline-primary logout-btn" />
