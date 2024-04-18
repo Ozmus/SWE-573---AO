@@ -47,6 +47,14 @@
     <div th:replace="navbar.html"></div>
     <br>
     <div class="container">
+        <!-- Join button -->
+        <div th:if="${!isMember}">
+            <form th:action="@{/community/join}" method="get">
+                <input type="hidden" name="name" th:value="${community.name}">
+                <button type="submit" class="btn btn-primary mb-4">Join</button>
+            </form>
+        </div>
+
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div th:if="${community}">

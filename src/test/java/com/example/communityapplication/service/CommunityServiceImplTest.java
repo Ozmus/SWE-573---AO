@@ -1,6 +1,7 @@
 package com.example.communityapplication.service;
 
 import com.example.communityapplication.dao.CommunityDao;
+import com.example.communityapplication.enums.Role;
 import com.example.communityapplication.model.Community;
 import com.example.communityapplication.model.User;
 import com.example.communityapplication.model.UserRole;
@@ -107,5 +108,26 @@ class CommunityServiceImplTest {
         // Assert
         assertFalse(result);
         verify(communityDao).findByCommunityName(communityName);
+    }
+
+    @Test
+    void testJoinCommunity() {
+        // Arrange
+        Community community = new Community();
+        community.setId(1L);
+        community.setName("Test Community");
+
+        User user = new User();
+        user.setId(1L);
+
+        // Act
+        communityService.joinCommunity(community, user);
+
+        // Assert
+        verify(userRoleService).save(argThat(userRole ->
+                userRole.getId().getUserId() == user.getId() &&
+                        userRole.getId().getCommunityId() == community.getId() &&
+                        userRole.getRole() == Role.MEMBER
+        ));
     }
 }
