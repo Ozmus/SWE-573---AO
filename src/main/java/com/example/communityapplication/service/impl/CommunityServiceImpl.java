@@ -46,8 +46,18 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
+	public void joinCommunity(Community community, User currentUser) {
+		userRoleService.save(new UserRole(new UserRolesId(currentUser.getId(), community.getId()), Role.MEMBER));
+	}
+
+	@Override
 	public boolean isExist(String name) {
 		Community existing = this.getByCommunityName(name);
 		return existing != null;
+	}
+
+	@Override
+	public boolean isMember(Community community, User currentUser) {
+		return userRoleService.getRoleByUserAndCommunityId(new UserRolesId(currentUser.getId(), community.getId())) != null;
 	}
 }

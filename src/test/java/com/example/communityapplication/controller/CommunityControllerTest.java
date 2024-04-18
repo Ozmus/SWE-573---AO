@@ -62,7 +62,7 @@ class CommunityControllerTest {
         when(communityService.getByCommunityName(communityName)).thenReturn(community);
 
         // Act
-        String viewName = communityController.showCommunityDetails(communityName, model);
+        String viewName = communityController.showCommunityDetails(communityName, model, session);
 
         // Assert
         assertEquals("community/community-details", viewName);

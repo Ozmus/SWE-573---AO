@@ -49,9 +49,10 @@ public class CommunityController {
 		return "community/community-page";
 	}
 	@GetMapping("/details")
-	public String showCommunityDetails(@RequestParam("name") String name, Model theModel) {
+	public String showCommunityDetails(@RequestParam("name") String name, Model theModel, HttpSession session) {
 		Community community = communityService.getByCommunityName(name);
 		theModel.addAttribute("community", community);
+		theModel.addAttribute("isMember", communityService.isMember(community, (User)session.getAttribute("user")));
 		return "community/community-details";
 	}
 	@GetMapping("/create")
@@ -60,6 +61,16 @@ public class CommunityController {
 		theModel.addAttribute("newCommunity", new Community("", "", "", false));
 		
 		return "community/community-form";
+	}
+
+	@GetMapping("/join")
+	public String joinCommunity(@RequestParam("name") String name, Model theModel, HttpSession session) {
+		Community community = communityService.getByCommunityName(name);
+
+		theModel.addAttribute("community", community);
+		communityService.joinCommunity(community, (User)session.getAttribute("user"));
+		theModel.addAttribute("isMember", communityService.isMember(community, (User)session.getAttribute("user")));
+		return "community/community-details";
 	}
 
 	@PostMapping("/processCreateCommunityForm")
