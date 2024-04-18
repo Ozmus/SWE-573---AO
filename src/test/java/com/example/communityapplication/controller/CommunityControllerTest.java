@@ -1,6 +1,7 @@
 package com.example.communityapplication.controller;
 
 import com.example.communityapplication.model.Community;
+import com.example.communityapplication.model.User;
 import com.example.communityapplication.service.CommunityService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -129,6 +130,67 @@ class CommunityControllerTest {
         verify(communityService).isExist(community.getName());
         verify(communityService).createCommunity(community, null);
         verifyNoMoreInteractions(communityService, model);
+    }
+
+    @Test
+    public void testJoinCommunity_Success() {
+        // Arrange
+        String communityName = "Test Community";
+        Community community = new Community();
+        community.setName(communityName);
+
+        User user = new User();
+        user.setId(1L);
+
+        when(session.getAttribute("user")).thenReturn(user);
+        when(communityService.getByCommunityName(communityName)).thenReturn(community);
+        when(communityService.isMember(community, user)).thenReturn(true);
+
+        // Act
+        String viewName = communityController.joinCommunity(communityName, model, session);
+
+        // Assert
+        assertEquals("community/community-details", viewName);
+        verify(model).addAttribute("community", community);
+        verify(model).addAttribute("isMember", true);
+    }
+
+    @Test
+    public void testJoinCommunity_CommunityNotFound() {
+        // Arrange
+        String communityName = "Nonexistent Community";
+        when(communityService.getByCommunityName(communityName)).thenReturn(null);
+        User user = new User();
+        user.setId(1L);
+        when(session.getAttribute("user")).thenReturn(user);
+
+        // Act
+        String viewName = communityController.joinCommunity(communityName, model, session);
+
+        // Assert
+        assertEquals("community/community-details", viewName);
+        verify(model).addAttribute("community", null);
+    }
+
+    @Test
+    public void testJoinCommunity_UserNotAuthenticated() {
+        // Arrange
+        String communityName = "Test Community";
+        Community community = new Community();
+        community.setName(communityName);
+
+        // Mocking session to return null user
+        when(session.getAttribute("user")).thenReturn(null);
+        when(communityService.getByCommunityName(communityName)).thenReturn(community);
+        when(communityService.isMember(community, null)).thenReturn(false);
+
+        // Act
+        String viewName = communityController.joinCommunity(communityName, model, session);
+
+        // Assert
+        assertEquals("community/community-details", viewName);
+        verify(model).addAttribute("community", community);
+        verify(model).addAttribute("isMember", false);
     }
 }
 
