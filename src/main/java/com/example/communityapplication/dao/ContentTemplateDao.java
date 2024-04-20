@@ -7,7 +7,7 @@ import com.example.communityapplication.model.ContentTemplate;
 import java.util.List;
 
 public interface ContentTemplateDao {
-    ContentTemplate findByContentTemplateId(String id, Community community);
+    ContentTemplate findByNameAndCommunityId(String name, Community community);
     List<ContentTemplate> findByCommunityId(long communityId);
     void save(ContentTemplate theContentTemplate);
 

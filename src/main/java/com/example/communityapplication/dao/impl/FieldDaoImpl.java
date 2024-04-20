@@ -52,6 +52,7 @@ public class FieldDaoImpl implements FieldDao {
 	}
 
 	@Override
+	@Transactional
 	public void save(Field theField) {
 		entityManager.merge(theField);
 	}

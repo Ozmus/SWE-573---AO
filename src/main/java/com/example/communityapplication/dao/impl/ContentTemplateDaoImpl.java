@@ -24,9 +24,9 @@ public class ContentTemplateDaoImpl implements ContentTemplateDao {
 	}
 
 	@Override
-	public ContentTemplate findByContentTemplateId(String id, Community community) {
+	public ContentTemplate findByNameAndCommunityId(String name, Community community) {
 		TypedQuery<ContentTemplate> theQuery = entityManager.createQuery("from ContentTemplate where name=:ctName and community=:ctCommunity", ContentTemplate.class);
-		theQuery.setParameter("ctName", id);
+		theQuery.setParameter("ctName", name);
 		theQuery.setParameter("ctCommunity", community);
 
 
@@ -59,39 +59,4 @@ public class ContentTemplateDaoImpl implements ContentTemplateDao {
 	public void save(ContentTemplate theContentTemplate) {
 		entityManager.merge(theContentTemplate);
 	}
-
-	/*
-	@Override
-	public Content findByContentId(long id) {
-		TypedQuery<Content> theQuery = entityManager.createQuery("from Content where id=:cId", Content.class);
-		theQuery.setParameter("cId", id);
-
-		Content theContent = null;
-		try {
-			theContent = theQuery.getSingleResult();
-		} catch (Exception e) {
-			theContent = null;
-		}
-
-		return theContent;
-	}
-
-	@Override
-	public List<Content> findByCommunityId(long communityId) {
-		TypedQuery<Content> theQuery = entityManager.createQuery("from Content", Content.class);
-
-		List<Content> theContents = null;
-		try {
-			theContents = theQuery.getResultList();
-		} catch (Exception e) {
-			theContents = null;
-		}
-		return theContents;
-	}
-
-	@Override
-	public void save(Content theContent) {
-		entityManager.merge(theContent);
-	}
-	*/
 }

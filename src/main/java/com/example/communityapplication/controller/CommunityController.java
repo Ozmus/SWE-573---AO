@@ -77,7 +77,8 @@ public class CommunityController {
 	public String processCreateCommunityForm(
 			@Valid @ModelAttribute("newCommunity") Community theCommunity,
 			BindingResult theBindingResult,
-			HttpSession session, Model theModel) {
+			HttpSession session,
+			Model theModel) {
 
 		String communityName = theCommunity.getName();
 		

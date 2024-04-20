@@ -32,6 +32,11 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
+	public Community getByCommunityId(long id) {
+		return this.communityDao.findByCommunityId(id);
+	}
+
+	@Override
 	public Community getByCommunityName(String name) {
 		return this.communityDao.findByCommunityName(name);
 	}
@@ -48,7 +53,7 @@ public class CommunityServiceImpl implements CommunityService {
 		Community createdCommunity = this.getByCommunityName(theCommunity.getName());
 		userRoleService.save(new UserRole(new UserRolesId(currentUser.getId(), createdCommunity.getId()), Role.OWNER));
 		contentTemplateDao.save(new ContentTemplate("Default", createdCommunity));
-		ContentTemplate createdContentTemplate = contentTemplateDao.findByContentTemplateId("Default", createdCommunity);
+		ContentTemplate createdContentTemplate = contentTemplateDao.findByNameAndCommunityId("Default", createdCommunity);
 		fieldDao.save(new Field("Text", "String", createdContentTemplate));
 	}
 
