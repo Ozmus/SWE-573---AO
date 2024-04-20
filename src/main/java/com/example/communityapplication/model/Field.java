@@ -21,6 +21,15 @@ public class Field {
     @JoinColumn(name = "content_template_id", nullable = false)
     private ContentTemplate contentTemplate;
 
+    public Field() {
+    }
+
+    public Field(String name, String dataType, ContentTemplate contentTemplate) {
+        this.name = name;
+        this.dataType = dataType;
+        this.contentTemplate = contentTemplate;
+    }
+
     // Getters and setters
 
     public int getId() {

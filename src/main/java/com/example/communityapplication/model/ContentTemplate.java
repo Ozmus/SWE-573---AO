@@ -18,6 +18,14 @@ public class ContentTemplate {
     @JoinColumn(name = "community_id", nullable = false)
     private Community community;
 
+    public ContentTemplate() {
+    }
+
+    public ContentTemplate(String name, Community community) {
+        this.name = name;
+        this.community = community;
+    }
+
     // Getters and setters
 
     public int getId() {

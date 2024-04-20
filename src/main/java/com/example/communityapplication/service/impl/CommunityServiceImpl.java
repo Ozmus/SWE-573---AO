@@ -1,10 +1,10 @@
 package com.example.communityapplication.service.impl;
 
 import com.example.communityapplication.dao.CommunityDao;
+import com.example.communityapplication.dao.ContentTemplateDao;
+import com.example.communityapplication.dao.FieldDao;
 import com.example.communityapplication.enums.Role;
-import com.example.communityapplication.model.Community;
-import com.example.communityapplication.model.User;
-import com.example.communityapplication.model.UserRole;
+import com.example.communityapplication.model.*;
 import com.example.communityapplication.model.embedded.keys.UserRolesId;
 import com.example.communityapplication.service.CommunityService;
 import com.example.communityapplication.service.UserRoleService;
@@ -19,12 +19,16 @@ public class CommunityServiceImpl implements CommunityService {
 
 	private CommunityDao communityDao;
 	private UserRoleService userRoleService;
+	private ContentTemplateDao contentTemplateDao;
+	private FieldDao fieldDao;
 
 
 	@Autowired
-	public CommunityServiceImpl(CommunityDao communityDao, UserRoleService userRoleService) {
+	public CommunityServiceImpl(CommunityDao communityDao, UserRoleService userRoleService, ContentTemplateDao contentTemplateDao, FieldDao fieldDao) {
 		this.communityDao = communityDao;
 		this.userRoleService = userRoleService;
+		this.contentTemplateDao = contentTemplateDao;
+		this.fieldDao = fieldDao;
 	}
 
 	@Override
@@ -43,6 +47,9 @@ public class CommunityServiceImpl implements CommunityService {
 		communityDao.save(theCommunity);
 		Community createdCommunity = this.getByCommunityName(theCommunity.getName());
 		userRoleService.save(new UserRole(new UserRolesId(currentUser.getId(), createdCommunity.getId()), Role.OWNER));
+		contentTemplateDao.save(new ContentTemplate("Default", createdCommunity));
+		ContentTemplate createdContentTemplate = contentTemplateDao.findByContentTemplateId("Default", createdCommunity);
+		fieldDao.save(new Field("Text", "String", createdContentTemplate));
 	}
 
 	@Override
