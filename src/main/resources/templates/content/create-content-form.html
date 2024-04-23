@@ -1,101 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title>Post Form</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-</head>
+    <head>
+        <title>Create Content Form</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    </head>
 
-<body>
+    <body>
 
-<div class="container">
+    <div class="container">
+        <h2>Create Content</h2>
+        <form action="#" th:action="@{/content/createContentSubmit}"
+              th:object="${contentForm}" method="POST" class="form-horizontal">
 
-    <div id="loginbox" style="margin-top: 50px;"
-         class="col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
-
-        <div class="card border-info">
-
-            <div class="card-header bg-info">
-                Post
-            </div>
-
-            <div class="card-body">
-                <div class="card-text">
-                    <form action="#" th:action="@{/createPost}"
-                          th:object="${newCommunity}"
-                          method="POST" class="form-horizontal">
-
-                        <!-- Place for messages: error, alert etc ... -->
-                        <div class="form-group">
-                            <div class="col-xs-15">
-                                <div>
-                                    <!-- Check for post error -->
-                                    <div th:if="${param.communityCreationError}">
-                                        <div class="alert alert-danger col-xs-offset-1 col-xs-10">
-                                            <span th:text="${param.communityCreationError}"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Name -->
-                        <div style="margin-bottom: 25px" class="input-group">
-                            <input type="text" th:field="*{name}" placeholder="name (*)" class="form-control" />
-                        </div>
-
-                        <div th:if="${#fields.hasErrors('name')}"
-                             style="margin-bottom: 25px" class="text-danger">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('name')}" th:text="'Name ' + ${err}" />
-                            </ul>
-                        </div>
-
-                        <!-- Description -->
-                        <div style="margin-bottom: 25px" class="input-group">
-                            <input type="text" th:field="*{description}" placeholder="Description (*)" class="form-control" />
-                        </div>
-
-                        <div th:if="${#fields.hasErrors('description')}"
-                             style="margin-bottom: 25px" class="text-danger">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('description')}" th:text="'Description ' + ${err}" />
-                            </ul>
-                        </div>
-
-                        <!-- Image -->
-                        <div style="margin-bottom: 25px" class="input-group">
-                            <label for="imageInput" class="form-label">Image (*)</label>
-                            <input type="file" id="imageInput" th:field="*{image_url}" class="form-control" accept="image/*" />
-                        </div>
-
-                        <div th:if="${#fields.hasErrors('image_url')}" style="margin-bottom: 25px" class="text-danger">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('image_url')}" th:text="'Image ' + ${err}" />
-                            </ul>
-                        </div>
-
-
-                        <!-- Create Button -->
-                        <div style="margin-top: 10px" class="form-group">
-                            <div class="col-sm-6 controls">
-                                <button type="submit" class="btn btn-primary">Create</button>
-                            </div>
-                        </div>
-
-                    </form>
-
+            <!-- Display fields dynamically based on the content template -->
+            <div th:each="field : ${fields}">
+                <div class="form-group">
+                    <label th:text="${field.name}"></label>
+                    <input type="text" class="form-control" th:field="*{fieldValues[__${field.id}__]}" />
                 </div>
-
             </div>
 
-        </div>
+            <!-- Submit button -->
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </form>
     </div>
-
-</div>
-
-</body>
+    </body>
 </html>

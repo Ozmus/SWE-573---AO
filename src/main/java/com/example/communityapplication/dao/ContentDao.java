@@ -7,6 +7,6 @@ import java.util.List;
 public interface ContentDao {
     Content findByContentId(long id);
     List<Content> findByContentTemplateId(long contentTemplateId);
-    void save(Content theContent);
+    Content save(Content theContent);
 
 }

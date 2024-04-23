@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface ContentTemplateDao {
     ContentTemplate findByNameAndCommunityId(String name, Community community);
-    List<ContentTemplate> findByCommunityId(long communityId);
+    List<ContentTemplate> findByCommunityId(Community community);
+    ContentTemplate findById(Long id);
     void save(ContentTemplate theContentTemplate);
 
 }

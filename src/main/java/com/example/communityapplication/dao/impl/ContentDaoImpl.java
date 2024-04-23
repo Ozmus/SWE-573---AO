@@ -53,8 +53,8 @@ public class ContentDaoImpl implements ContentDao {
 
 	@Override
 	@Transactional
-	public void save(Content theContent) {
-		entityManager.merge(theContent);
+	public Content save(Content theContent) {
+		return entityManager.merge(theContent);
 	}
 
 }

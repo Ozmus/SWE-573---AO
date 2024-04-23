@@ -37,12 +37,11 @@
 <div th:replace="navbar.html"></div>
 <br>
 <div class="container">
-    <a th:each="community : ${communities}"
-       th:href="@{/community/details(name=${community.name})}" class="text-decoration-none">
+    <a th:each="contentTemplate : ${contentTemplates}"
+       th:href="@{/content/createContent(contentTemplateId=${contentTemplate.id})}" class="text-decoration-none">
         <div class="card clickable">
-            <img th:src="${community.image_url}" class="card-img-top" alt="Community Image">
             <div class="card-body">
-                <h5 class="card-title" th:text="${community.name}"></h5>
+                <h5 class="card-title" th:text="${contentTemplate.name}"></h5>
             </div>
         </div>
     </a>

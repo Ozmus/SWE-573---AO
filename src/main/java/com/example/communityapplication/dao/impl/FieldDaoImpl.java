@@ -3,6 +3,7 @@ package com.example.communityapplication.dao.impl;
 import com.example.communityapplication.dao.ContentDao;
 import com.example.communityapplication.dao.FieldDao;
 import com.example.communityapplication.model.Content;
+import com.example.communityapplication.model.ContentTemplate;
 import com.example.communityapplication.model.Field;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -38,9 +39,9 @@ public class FieldDaoImpl implements FieldDao {
 	}
 
 	@Override
-	public List<Field> findByContentTemplateId(long contentTemplateId) {
-		TypedQuery<Field> theQuery = entityManager.createQuery("from Field  where contentTemplate =:ctId", Field.class);
-		theQuery.setParameter("ctId", contentTemplateId);
+	public List<Field> findByContentTemplateId(ContentTemplate contentTemplate) {
+		TypedQuery<Field> theQuery = entityManager.createQuery("from Field  where contentTemplate =:fContentTemplate", Field.class);
+		theQuery.setParameter("fContentTemplate", contentTemplate);
 
 		List<Field> theFields = null;
 		try {
