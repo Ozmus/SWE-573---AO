@@ -13,12 +13,14 @@
 
     <div class="container">
         <h2>Create Content</h2>
-        <form action="#" th:action="@{/content/createContentSubmit}"
+        <form action="#" th:action="@{/content/createContentSubmit(contentTemplateId=${contentTemplate.id})}"
               th:object="${contentForm}" method="POST" class="form-horizontal">
 
             <!-- Display fields dynamically based on the content template -->
             <div th:each="field : ${fields}">
                 <div class="form-group">
+                    <label th:text="Title"></label>
+                    <input type="text" class="form-control" th:field="*{title}" />
                     <label th:text="${field.name}"></label>
                     <input type="text" class="form-control" th:field="*{fieldValues[__${field.id}__]}" />
                 </div>

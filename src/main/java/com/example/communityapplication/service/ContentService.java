@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ContentService {
     public Content getById(Long contentId);
-    public void saveContentAndFieldValues(ContentForm contentForm, User user);
+    public Content saveContent(ContentForm contentForm, User user);
 }

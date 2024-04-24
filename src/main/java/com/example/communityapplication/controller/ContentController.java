@@ -23,6 +23,7 @@ public class ContentController {
     private ContentTemplateService contentTemplateService;
     private ContentService contentService;
     private FieldService fieldService;
+    private FieldValueService fieldValueService;
 
 
     @Autowired
@@ -30,12 +31,14 @@ public class ContentController {
                              UserRoleService userRoleService,
                              ContentTemplateService contentTemplateService,
                              ContentService contentService,
-                             FieldService fieldService) {
+                             FieldService fieldService,
+                             FieldValueService fieldValueService) {
         this.communityService = communityService;
         this.userRoleService = userRoleService;
         this.contentTemplateService = contentTemplateService;
         this.contentService = contentService;
         this.fieldService = fieldService;
+        this.fieldValueService = fieldValueService;
     }
 
     @InitBinder
@@ -76,28 +79,19 @@ public class ContentController {
         // Add content template and fields to the model
         theModel.addAttribute("contentTemplate", contentTemplate);
         theModel.addAttribute("fields", fields);
-        theModel.addAttribute("contentForm", new ContentForm()); // Add an instance of ContentForm
+        theModel.addAttribute("contentForm", new ContentForm());
 
         return "content/create-content-form";
     }
 
     @PostMapping("/createContentSubmit")
-    public String createContentSubmit(@ModelAttribute("contentForm") ContentForm contentForm, HttpSession session) {
+    public String createContentSubmit(@RequestParam("contentTemplateId") String contentTemplateId, @ModelAttribute("contentForm") ContentForm contentForm, HttpSession session) {
         User user = (User) session.getAttribute("user");
+        contentForm.setContentTemplate(contentTemplateService.getById(Long.parseLong(contentTemplateId)));
 
         // Save the content and field values
-        contentService.saveContentAndFieldValues(contentForm, user);
-
-        // Redirect to a different page after submission (e.g., home page)
-        return "/";
+        Content content = contentService.saveContent(contentForm, user);
+        fieldValueService.saveFieldValues(contentForm, content);
+        return "home";
     }
 }
-
-
-
-
-
-
-
-
-

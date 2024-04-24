@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class FieldValueDaoImpl implements FieldValueDao {
 	}
 
 	@Override
+	@Transactional
 	public void save(FieldValue theFieldValue) {
 		entityManager.merge(theFieldValue);
 	}

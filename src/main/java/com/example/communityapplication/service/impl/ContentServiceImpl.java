@@ -1,10 +1,9 @@
 package com.example.communityapplication.service.impl;
 
 import com.example.communityapplication.dao.ContentDao;
-import com.example.communityapplication.dao.ContentTemplateDao;
 import com.example.communityapplication.model.*;
 import com.example.communityapplication.service.ContentService;
-import com.example.communityapplication.service.ContentTemplateService;
+import com.example.communityapplication.service.FieldValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +14,8 @@ import java.util.List;
 public class ContentServiceImpl implements ContentService {
 	private ContentDao contentDao;
 
-
-
 	@Autowired
-	public ContentServiceImpl(ContentDao contentDao) {
+	public ContentServiceImpl(ContentDao contentDao, FieldValueService fieldValueService) {
 		this.contentDao = contentDao;
 	}
 
@@ -28,8 +25,7 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public void saveContentAndFieldValues(ContentForm contentForm, User user) {
-		// Save the content and get the generated content ID
-		contentDao.findByContentId(1);
+	public Content saveContent(ContentForm contentForm, User user) {
+		return contentDao.save(new Content(contentForm.getTitle(), user, contentForm.getContentTemplate()));
 	}
 }

@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `field_values`;
 CREATE TABLE `field_values` (
                           `content_id` int NOT NULL,
                           `field_id` int NOT NULL,
-                          `value` int NOT NULL,
+                          `value` varchar(250) NOT NULL,
                           CONSTRAINT PK_FieldValues PRIMARY KEY (`content_id`, `field_id`),
                           FOREIGN KEY (content_id) REFERENCES contents(id),
                           FOREIGN KEY (field_id) REFERENCES fields(id)

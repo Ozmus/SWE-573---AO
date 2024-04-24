@@ -11,7 +11,7 @@ public class FieldValue {
     private FieldValueId id;
 
     @Column(name = "value", nullable = false)
-    private int value;
+    private String value;
 
     @ManyToOne
     @JoinColumn(name = "content_id", insertable = false, updatable = false)
@@ -20,6 +20,15 @@ public class FieldValue {
     @ManyToOne
     @JoinColumn(name = "field_id", insertable = false, updatable = false)
     private Field field;
+
+    public FieldValue() {
+
+    }
+
+    public FieldValue(FieldValueId fieldValueId, String fieldValue) {
+        this.id =fieldValueId;
+        this.value = fieldValue;
+    }
 
     // Getters and setters
 
@@ -31,11 +40,11 @@ public class FieldValue {
         this.id = id;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
