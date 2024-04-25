@@ -14,19 +14,16 @@ public class ContentServiceImpl implements ContentService {
 	private ContentDao contentDao;
 	private CommunityService communityService;
 	private ContentTemplateService contentTemplateService;
-	private FieldService fieldService;
 	private FieldValueService fieldValueService;
 
 	@Autowired
 	public ContentServiceImpl(ContentDao contentDao,
 							  CommunityService communityService,
 							  ContentTemplateService contentTemplateService,
-							  FieldService fieldService,
 							  FieldValueService fieldValueService) {
 		this.contentDao = contentDao;
 		this.communityService = communityService;
 		this.contentTemplateService = contentTemplateService;
-		this.fieldService = fieldService;
 		this.fieldValueService = fieldValueService;
 	}
 
@@ -59,9 +56,10 @@ public class ContentServiceImpl implements ContentService {
 		List<ContentCard> contentCards = new ArrayList<>();
 		for(Content content : contents){
 			ContentCard contentCard = new ContentCard();
-			contentCard.setUser(user);
+			contentCard.setUser(content.getUser());
 			contentCard.setTitle(content.getTitle());
 			contentCard.setContentTemplate(content.getContentTemplate());
+			contentCard.setCommunity(content.getContentTemplate().getCommunity());
 			Map<Integer, String> fieldValues = new HashMap<>();
 			Map<Integer, String> fieldNames = new HashMap<>();
 			for(FieldValue fieldValue : fieldValueService.getFieldValuesByContent(content)){

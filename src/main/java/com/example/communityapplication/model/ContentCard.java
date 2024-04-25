@@ -11,10 +11,19 @@ public class ContentCard {
     private ContentTemplate contentTemplate;
     private String title;
     private User user;
+    private Community community;
 
     // Constructors, getters, and setters
 
     public ContentCard() {}
+
+    public Community getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
+    }
 
     public User getUser() {
         return user;

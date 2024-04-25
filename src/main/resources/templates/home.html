@@ -38,10 +38,12 @@
 <br>
 <div class="container">
     <a th:href="@{/content/selectCommunity}" class="btn btn-primary mb-4">Post</a>
-    <h2>Content Cards</h2>
+    <h2>Contents</h2>
     <ul class="list-group">
         <li th:each="contentCard : ${contentCards}" class="list-group-item">
             <strong th:text="${contentCard.title}"></strong> - by <span th:text="${contentCard.user.userName}"></span>
+            <br>
+            Community: <span th:text="${contentCard.community.name}"></span>
             <div>
                     <span th:each="entry : ${contentCard.fieldValues}">
                         <strong th:text="${contentCard.getFieldName(entry.key)} + ': '"></strong>
