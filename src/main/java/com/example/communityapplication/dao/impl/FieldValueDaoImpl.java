@@ -2,6 +2,7 @@ package com.example.communityapplication.dao.impl;
 
 import com.example.communityapplication.dao.FieldDao;
 import com.example.communityapplication.dao.FieldValueDao;
+import com.example.communityapplication.model.Content;
 import com.example.communityapplication.model.Field;
 import com.example.communityapplication.model.FieldValue;
 import jakarta.persistence.EntityManager;
@@ -28,9 +29,9 @@ public class FieldValueDaoImpl implements FieldValueDao {
 	}
 
 	@Override
-	public List<FieldValue> findByContentId(long contentId) {
-		TypedQuery<FieldValue> theQuery = entityManager.createQuery("from FieldValue  where id =:cId", FieldValue.class);
-		theQuery.setParameter("cId", contentId);
+	public List<FieldValue> findByContentId(Content content) {
+		TypedQuery<FieldValue> theQuery = entityManager.createQuery("from FieldValue  where content =:fContent", FieldValue.class);
+		theQuery.setParameter("fContent", content);
 
 		List<FieldValue> theFieldValues = null;
 		try {

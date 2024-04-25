@@ -12,6 +12,7 @@ import com.example.communityapplication.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,6 +46,15 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public List<Community> getAllCommunities() {
 		return this.communityDao.findAllCommunities();
+	}
+
+	@Override
+	public List<Community> getAllCommunitiesByUser(User user) {
+		List<Community> communities = new ArrayList<>();
+		for(UserRole userRole : userRoleService.getRoleByUser(user)){
+			communities.add(communityDao.findByCommunityId(userRole.getId().getCommunityId()));
+		}
+		return communities;
 	}
 
 	@Override

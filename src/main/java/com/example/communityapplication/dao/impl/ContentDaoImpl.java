@@ -4,6 +4,7 @@ import com.example.communityapplication.dao.CommunityDao;
 import com.example.communityapplication.dao.ContentDao;
 import com.example.communityapplication.model.Community;
 import com.example.communityapplication.model.Content;
+import com.example.communityapplication.model.ContentTemplate;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,9 @@ public class ContentDaoImpl implements ContentDao {
 	}
 
 	@Override
-	public List<Content> findByContentTemplateId(long contentTemplateId) {
-		TypedQuery<Content> theQuery = entityManager.createQuery("from Content  where contentTemplate =:ctId", Content.class);
-		theQuery.setParameter("ctId", contentTemplateId);
+	public List<Content> findByContentTemplateId(ContentTemplate contentTemplate) {
+		TypedQuery<Content> theQuery = entityManager.createQuery("from Content  where contentTemplate =:ctContentTemplate", Content.class);
+		theQuery.setParameter("ctContentTemplate", contentTemplate);
 
 		List<Content> theContents = null;
 		try {
