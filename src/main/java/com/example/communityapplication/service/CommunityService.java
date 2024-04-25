@@ -9,6 +9,7 @@ public interface CommunityService {
     public Community getByCommunityId(long id);
     public Community getByCommunityName(String name);
     public List<Community> getAllCommunities();
+    public List<Community> getAllCommunitiesByUser(User user);
     void createCommunity(Community community, User currentUser);
     void joinCommunity(Community community, User currentUser);
     boolean isExist(String name);

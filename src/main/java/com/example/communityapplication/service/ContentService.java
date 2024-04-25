@@ -7,4 +7,5 @@ import java.util.List;
 public interface ContentService {
     public Content getById(Long contentId);
     public Content saveContent(ContentForm contentForm, User user);
+    public List<ContentCard> getContentCardsByUser(User user);
 }

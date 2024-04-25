@@ -9,6 +9,8 @@ import com.example.communityapplication.service.FieldValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FieldValueServiceImpl implements FieldValueService {
 
@@ -17,6 +19,11 @@ public class FieldValueServiceImpl implements FieldValueService {
 	@Autowired
 	public FieldValueServiceImpl(FieldValueDao fieldValueDao) {
 		this.fieldValueDao = fieldValueDao;
+	}
+
+	@Override
+	public List<FieldValue> getFieldValuesByContent(Content content) {
+		return fieldValueDao.findByContentId(content);
 	}
 
 	@Override

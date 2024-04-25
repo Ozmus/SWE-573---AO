@@ -9,7 +9,7 @@ public class Field {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private int id;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -32,11 +32,11 @@ public class Field {
 
     // Getters and setters
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
