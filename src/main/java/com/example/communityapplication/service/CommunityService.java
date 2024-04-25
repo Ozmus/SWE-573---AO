@@ -6,6 +6,7 @@ import com.example.communityapplication.model.User;
 import java.util.List;
 
 public interface CommunityService {
+    public Community getByCommunityId(long id);
     public Community getByCommunityName(String name);
     public List<Community> getAllCommunities();
     void createCommunity(Community community, User currentUser);

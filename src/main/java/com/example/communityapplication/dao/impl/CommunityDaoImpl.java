@@ -21,8 +21,22 @@ public class CommunityDaoImpl implements CommunityDao {
 	}
 
 	@Override
-	public Community findByCommunityName(String theCommunityName) {
+	public Community findByCommunityId(long id) {
+		TypedQuery<Community> theQuery = entityManager.createQuery("from Community where id=:cId", Community.class);
+		theQuery.setParameter("cId", id);
 
+		Community theCommunity = null;
+		try {
+			theCommunity = theQuery.getSingleResult();
+		} catch (Exception e) {
+			theCommunity = null;
+		}
+
+		return theCommunity;
+	}
+
+	@Override
+	public Community findByCommunityName(String theCommunityName) {
 		TypedQuery<Community> theQuery = entityManager.createQuery("from Community where name=:cName", Community.class);
 		theQuery.setParameter("cName", theCommunityName);
 

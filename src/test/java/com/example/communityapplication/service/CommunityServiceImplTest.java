@@ -1,10 +1,10 @@
 package com.example.communityapplication.service;
 
 import com.example.communityapplication.dao.CommunityDao;
+import com.example.communityapplication.dao.ContentTemplateDao;
+import com.example.communityapplication.dao.FieldDao;
 import com.example.communityapplication.enums.Role;
-import com.example.communityapplication.model.Community;
-import com.example.communityapplication.model.User;
-import com.example.communityapplication.model.UserRole;
+import com.example.communityapplication.model.*;
 import com.example.communityapplication.service.impl.CommunityServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,11 @@ class CommunityServiceImplTest {
 
     @Mock
     private CommunityDao communityDao;
+    @Mock
+    private ContentTemplateDao contentTemplateDao;
 
+    @Mock
+    private FieldDao fieldDao;
     @Mock
     private UserRoleService userRoleService;
 
@@ -70,15 +74,20 @@ class CommunityServiceImplTest {
         // Arrange
         User currentUser = mock(User.class);
         Community community = new Community("Community1", "Description", "Image URL", false);
+        ContentTemplate contentTemplate = new ContentTemplate("Default", community);
+
         community.setId(1L);
         when(currentUser.getId()).thenReturn(1L);
         when(communityDao.findByCommunityName(community.getName())).thenReturn(community);
+        when(contentTemplateDao.findByNameAndCommunityId(contentTemplate.getName(), community)).thenReturn(contentTemplate);
+
         // Act
         communityService.createCommunity(community, currentUser);
 
         // Assert
         verify(communityDao).save(community);
         verify(userRoleService).save(any(UserRole.class));
+        verify(fieldDao).save(any(Field.class));
     }
 
     @Test
