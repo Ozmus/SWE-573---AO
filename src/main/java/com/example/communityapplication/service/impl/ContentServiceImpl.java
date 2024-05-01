@@ -28,7 +28,7 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public Content getById(Long contentId) {
+	public Content getById(int contentId) {
 		return contentDao.findByContentId(contentId);
 	}
 

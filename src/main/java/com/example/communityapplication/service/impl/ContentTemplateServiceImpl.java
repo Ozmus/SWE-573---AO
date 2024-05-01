@@ -31,7 +31,7 @@ public class ContentTemplateServiceImpl implements ContentTemplateService {
 	}
 
 	@Override
-	public ContentTemplate getById(Long id) {
+	public ContentTemplate getById(int id) {
 		return this.contentTemplateDao.findById(id);
 	}
 }

@@ -9,5 +9,4 @@ public interface FieldDao {
     Field findByFieldId(long id);
     List<Field> findByContentTemplateId(ContentTemplate contentTemplate);
     void save(Field theField);
-
 }

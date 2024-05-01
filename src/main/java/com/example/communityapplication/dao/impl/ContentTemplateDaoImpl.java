@@ -24,7 +24,7 @@ public class ContentTemplateDaoImpl implements ContentTemplateDao {
 	}
 
 	@Override
-	public ContentTemplate findById(Long id) {
+	public ContentTemplate findById(int id) {
 		TypedQuery<ContentTemplate> theQuery = entityManager.createQuery("from ContentTemplate where id=:ctId", ContentTemplate.class);
 		theQuery.setParameter("ctId", id);
 

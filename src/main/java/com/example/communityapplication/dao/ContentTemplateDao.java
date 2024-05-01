@@ -9,7 +9,6 @@ import java.util.List;
 public interface ContentTemplateDao {
     ContentTemplate findByNameAndCommunityId(String name, Community community);
     List<ContentTemplate> findByCommunityId(Community community);
-    ContentTemplate findById(Long id);
+    ContentTemplate findById(int id);
     void save(ContentTemplate theContentTemplate);
-
 }
