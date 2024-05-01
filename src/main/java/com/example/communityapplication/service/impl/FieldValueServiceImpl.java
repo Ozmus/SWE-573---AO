@@ -23,18 +23,28 @@ public class FieldValueServiceImpl implements FieldValueService {
 
 	@Override
 	public List<FieldValue> getFieldValuesByContent(Content content) {
+		if(content == null) throw new IllegalArgumentException("Content cannot be null");
 		return fieldValueDao.findByContentId(content);
 	}
 
 	@Override
 	public void save(FieldValue fieldValue) {
+		if(fieldValue == null) throw new IllegalArgumentException("FieldValue cannot be null");
 		fieldValueDao.save(fieldValue);
 	}
 
 	@Override
 	public void saveFieldValues(ContentForm contentForm, Content content) {
-		for(int fieldId : contentForm.getFieldValues().keySet()){
-			this.save(new FieldValue(new FieldValueId(content.getId(), fieldId), contentForm.getFieldValue(fieldId)));
+		if(content == null) {
+			throw new IllegalArgumentException("Content is null");
+		}
+		else if(contentForm == null) {
+			throw new IllegalArgumentException("ContentForm cannot be null");
+		}
+		else{
+			for (int fieldId : contentForm.getFieldValues().keySet()) {
+				this.save(new FieldValue(new FieldValueId(content.getId(), fieldId), contentForm.getFieldValue(fieldId)));
+			}
 		}
 	}
 }
