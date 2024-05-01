@@ -1,18 +1,14 @@
 package com.example.communityapplication.service.impl;
 
 import com.example.communityapplication.dao.FieldDao;
-import com.example.communityapplication.dao.UserRoleDao;
+import com.example.communityapplication.model.ContentTemplate;
 import com.example.communityapplication.model.Field;
-import com.example.communityapplication.model.User;
-import com.example.communityapplication.model.UserRole;
-import com.example.communityapplication.model.embedded.keys.UserRolesId;
-import com.example.communityapplication.service.ContentService;
 import com.example.communityapplication.service.ContentTemplateService;
 import com.example.communityapplication.service.FieldService;
-import com.example.communityapplication.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,6 +26,12 @@ public class FieldServiceImpl implements FieldService {
 
 	@Override
 	public List<Field> getFieldsByContentTemplateId(int contentTemplateId) {
-		return fieldDao.findByContentTemplateId(contentTemplateService.getById(contentTemplateId));
+		ContentTemplate contentTemplate = contentTemplateService.getById(contentTemplateId);
+		if(contentTemplate != null) {
+			return fieldDao.findByContentTemplateId(contentTemplate);
+		}
+		else{
+			return new ArrayList<>();
+		}
 	}
 }
