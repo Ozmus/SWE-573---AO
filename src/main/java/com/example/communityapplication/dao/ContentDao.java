@@ -6,7 +6,7 @@ import com.example.communityapplication.model.ContentTemplate;
 import java.util.List;
 
 public interface ContentDao {
-    Content findByContentId(long id);
+    Content findByContentId(int id);
     List<Content> findByContentTemplateId(ContentTemplate contentTemplateId);
     Content save(Content theContent);
 

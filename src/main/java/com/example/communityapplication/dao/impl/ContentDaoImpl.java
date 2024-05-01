@@ -24,7 +24,7 @@ public class ContentDaoImpl implements ContentDao {
 	}
 
 	@Override
-	public Content findByContentId(long id) {
+	public Content findByContentId(int id) {
 		TypedQuery<Content> theQuery = entityManager.createQuery("from Content where id=:cId", Content.class);
 		theQuery.setParameter("cId", id);
 
