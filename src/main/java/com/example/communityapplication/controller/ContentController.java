@@ -73,8 +73,8 @@ public class ContentController {
     @GetMapping("/createContent")
     public String showCreateForm(@RequestParam("contentTemplateId") String contentTemplateId, @ModelAttribute ContentForm contentForm, Model theModel, HttpSession session) {
         // Fetch content template and fields based on content template ID
-        ContentTemplate contentTemplate = contentTemplateService.getById(Long.parseLong(contentTemplateId));
-        List<Field> fields = fieldService.getFieldsByContentTemplateId(Long.parseLong(contentTemplateId));
+        ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
+        List<Field> fields = fieldService.getFieldsByContentTemplateId(Integer.parseInt(contentTemplateId));
 
         // Add content template and fields to the model
         theModel.addAttribute("contentTemplate", contentTemplate);
@@ -87,7 +87,7 @@ public class ContentController {
     @PostMapping("/createContentSubmit")
     public String createContentSubmit(@RequestParam("contentTemplateId") String contentTemplateId, @ModelAttribute("contentForm") ContentForm contentForm, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        contentForm.setContentTemplate(contentTemplateService.getById(Long.parseLong(contentTemplateId)));
+        contentForm.setContentTemplate(contentTemplateService.getById(Integer.parseInt(contentTemplateId)));
 
         // Save the content and field values
         Content content = contentService.saveContent(contentForm, user);

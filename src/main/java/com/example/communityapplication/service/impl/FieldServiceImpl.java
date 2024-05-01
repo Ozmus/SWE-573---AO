@@ -29,7 +29,7 @@ public class FieldServiceImpl implements FieldService {
 	}
 
 	@Override
-	public List<Field> getFieldsByContentTemplateId(Long contentTemplateId) {
+	public List<Field> getFieldsByContentTemplateId(int contentTemplateId) {
 		return fieldDao.findByContentTemplateId(contentTemplateService.getById(contentTemplateId));
 	}
 }

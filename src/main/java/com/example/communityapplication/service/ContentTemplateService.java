@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ContentTemplateService {
     public List<ContentTemplate> getByCommunity(Community community);
-    ContentTemplate getById(Long id);
+    ContentTemplate getById(int id);
 }
