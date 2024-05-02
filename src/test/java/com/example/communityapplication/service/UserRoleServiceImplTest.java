@@ -32,7 +32,7 @@ class UserRoleServiceImplTest {
     @Test
     void testGetRoleByUserAndCommunityId() {
         // Given
-        UserRolesId userRolesId = new UserRolesId(1L, 1L);
+        UserRolesId userRolesId = new UserRolesId(1, 1);
         UserRole expectedUserRole = new UserRole();
 
         when(userRoleDao.findByUserAndCommunityId(userRolesId)).thenReturn(expectedUserRole);
@@ -49,7 +49,7 @@ class UserRoleServiceImplTest {
     void testGetRoleByUser() {
         // Given
         User user = new User();
-        user.setId(1L);
+        user.setId(1);
         List<UserRole> expectedUserRoles = List.of(new UserRole(), new UserRole());
 
         when(userRoleDao.findByUserId(user.getId())).thenReturn(expectedUserRoles);

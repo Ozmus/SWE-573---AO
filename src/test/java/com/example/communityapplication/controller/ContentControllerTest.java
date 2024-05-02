@@ -53,12 +53,12 @@ public class ContentControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         testUser = new User();
-        testUser.setId(1L);
+        testUser.setId(1);
         testUser.setUserName("testUser");
         testUser.setPassword("password");
 
         testCommunity = new Community();
-        testCommunity.setId(1L);
+        testCommunity.setId(1);
         testCommunity.setName("Test Community");
     }
 
@@ -66,7 +66,7 @@ public class ContentControllerTest {
     void testShowSelectCommunity() {
         // Prepare mocks
         when(session.getAttribute("user")).thenReturn(testUser);
-        List<UserRole> userRoles = Arrays.asList(new UserRole(new UserRolesId(1L, 1L), Role.MEMBER));
+        List<UserRole> userRoles = Arrays.asList(new UserRole(new UserRolesId(1, 1), Role.MEMBER));
         when(userRoleService.getRoleByUser(testUser)).thenReturn(userRoles);
         when(communityService.getByCommunityId(anyLong())).thenReturn(testCommunity);
 

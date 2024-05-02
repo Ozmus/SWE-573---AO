@@ -35,7 +35,7 @@ class ContentTemplateServiceImplTest {
     void testGetByCommunity() {
         // Given
         Community community = new Community();
-        community.setId(1L);
+        community.setId(1);
 
         ContentTemplate template1 = new ContentTemplate();
         ContentTemplate template2 = new ContentTemplate();
@@ -56,7 +56,7 @@ class ContentTemplateServiceImplTest {
     void testGetByCommunityNoTemplates() {
         // Given
         Community community = new Community();
-        community.setId(1L);
+        community.setId(1);
 
         when(contentTemplateDao.findByCommunityId(community)).thenReturn(List.of());
 

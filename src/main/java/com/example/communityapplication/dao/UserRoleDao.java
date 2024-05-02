@@ -8,6 +8,6 @@ import java.util.List;
 public interface UserRoleDao {
     UserRole findByUserAndCommunityId(UserRolesId userRolesId);
     List<UserRole> findByUserId(long userId);
+    List<UserRole> findByCommunityId(int communityId);
     void save(UserRole theUserRole);
-
 }
