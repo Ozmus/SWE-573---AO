@@ -13,6 +13,7 @@ public interface UserRoleService {
 	UserRole getRoleByUserAndCommunityId(UserRolesId userRolesId);
 	List<UserRole> getRoleByUser(User user);
 	List<UserRole> getRoleByCommunityId(int communityId);
-	boolean kickUser(Role kickerRole, User user, Community community);
+	boolean kickUser(Role currentUserRole, User userToDelete, Community community);
+	void promoteUser(Role currentUserRole, User userToPromote, Community community);
 	void save(UserRole userRole);
 }

@@ -2,6 +2,7 @@ package com.example.communityapplication.dao.impl;
 
 
 import com.example.communityapplication.dao.UserRoleDao;
+import com.example.communityapplication.enums.Role;
 import com.example.communityapplication.model.User;
 import com.example.communityapplication.model.UserRole;
 import com.example.communityapplication.model.embedded.keys.UserRolesId;
@@ -56,6 +57,18 @@ public class UserRoleDaoImpl implements UserRoleDao {
 		theQuery.setParameter("communityId", communityId);
 
 		return theQuery.getResultList();
+	}
+
+	@Override
+	@Transactional
+	public void updateUserRole(UserRole userRole, Role updatedUserRole) {
+		if (userRole != null) {
+			// Update the existing user role entity with the new values from updatedUserRole
+			userRole.setRole(updatedUserRole);
+
+			// Merge the updated entity back to the database
+			entityManager.merge(userRole);
+		}
 	}
 
 	@Override

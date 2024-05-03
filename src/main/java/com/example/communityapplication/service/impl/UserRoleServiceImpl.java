@@ -63,6 +63,18 @@ public class UserRoleServiceImpl implements UserRoleService {
 	}
 
 	@Override
+	public void promoteUser(Role currentUserRole, User userToPromote, Community community) {
+		UserRole userToPromoteRole = this.getRoleByUserAndCommunityId(new UserRolesId(userToPromote.getId(), community.getId()));
+		if( (currentUserRole.equals(Role.MOD) && userToPromoteRole.getRole().equals(Role.MEMBER))
+		|| (currentUserRole.equals(Role.OWNER) && userToPromoteRole.getRole().equals(Role.MEMBER))
+		){
+			userRoleDao.updateUserRole(userToPromoteRole, Role.MOD);
+		} else if (currentUserRole.equals(Role.OWNER) && userToPromoteRole.getRole().equals(Role.MOD)) {
+			userRoleDao.updateUserRole(userToPromoteRole, Role.OWNER);
+		}
+	}
+
+	@Override
 	@Transactional
 	public void save(UserRole userRole) {
 		if(userRole == null){

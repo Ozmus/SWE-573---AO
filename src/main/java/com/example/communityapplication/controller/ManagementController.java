@@ -98,9 +98,22 @@ public class ManagementController {
                                 HttpSession session) {
         Community community = communityService.getByCommunityName(communityName);
         User userToDelete = userService.getByUserName(userName);
-        UserRole userRole = userRoleService.getRoleByUserAndCommunityId(new UserRolesId(userToDelete.getId(), community.getId()));
-        Role kickerRole = userRoleService.getRoleByUserAndCommunityId(new UserRolesId(((User)session.getAttribute("user")).getId(), community.getId())).getRole();
-        userRoleService.kickUser(kickerRole, userToDelete, community);
+        Role currentUserRole = userRoleService.getRoleByUserAndCommunityId(new UserRolesId(((User)session.getAttribute("user")).getId(), community.getId())).getRole();
+        userRoleService.kickUser(currentUserRole, userToDelete, community);
+
+        return this.showUsers(communityName, theModel, session);
+    }
+
+    @PostMapping("/userDetails/promote")
+    public String promoteUser(@RequestParam("communityName") String communityName,
+                           @RequestParam("userName") String userName,
+                           Model theModel,
+                           HttpSession session) {
+        Community community = communityService.getByCommunityName(communityName);
+        User userToPromote = userService.getByUserName(userName);
+        User currentUser = (User)session.getAttribute("user");
+        Role currentUserRole = userRoleService.getRoleByUserAndCommunityId(new UserRolesId(currentUser.getId(), community.getId())).getRole();
+        userRoleService.promoteUser(currentUserRole, userToPromote, community);
 
         return this.showUsers(communityName, theModel, session);
     }

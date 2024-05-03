@@ -46,6 +46,16 @@
                     <input type="hidden" name="userName" th:value="${user.userName}">
                     <button type="submit" class="btn btn-primary mb-4">Kick</button>
                 </form>
+                <form th:action="@{/management/userDetails/promote}" method="post">
+                    <input type="hidden" name="communityName" th:value="${community.name}">
+                    <input type="hidden" name="userName" th:value="${user.userName}">
+                    <button type="submit" class="btn btn-primary mb-4">Promote</button>
+                </form>
+                <form th:action="@{/management/userDetails/kick}" method="post">
+                    <input type="hidden" name="communityName" th:value="${community.name}">
+                    <input type="hidden" name="userName" th:value="${user.userName}">
+                    <button type="submit" class="btn btn-primary mb-4">Depromote</button>
+                </form>
             </div>
         </div>
 
