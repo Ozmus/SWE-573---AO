@@ -117,4 +117,18 @@ public class ManagementController {
 
         return this.showUsers(communityName, theModel, session);
     }
+
+    @PostMapping("/userDetails/depromote")
+    public String depromoteUser(@RequestParam("communityName") String communityName,
+                              @RequestParam("userName") String userName,
+                              Model theModel,
+                              HttpSession session) {
+        Community community = communityService.getByCommunityName(communityName);
+        User userToPromote = userService.getByUserName(userName);
+        User currentUser = (User)session.getAttribute("user");
+        Role currentUserRole = userRoleService.getRoleByUserAndCommunityId(new UserRolesId(currentUser.getId(), community.getId())).getRole();
+        userRoleService.depromoteUser(currentUserRole, userToPromote, community);
+
+        return this.showUsers(communityName, theModel, session);
+    }
 }

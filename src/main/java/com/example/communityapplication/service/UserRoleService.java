@@ -15,5 +15,6 @@ public interface UserRoleService {
 	List<UserRole> getRoleByCommunityId(int communityId);
 	boolean kickUser(Role currentUserRole, User userToDelete, Community community);
 	void promoteUser(Role currentUserRole, User userToPromote, Community community);
+	void depromoteUser(Role currentUserRole, User userToPromote, Community community);
 	void save(UserRole userRole);
 }
