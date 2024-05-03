@@ -2,6 +2,7 @@ package com.example.communityapplication.controller;
 
 import com.example.communityapplication.enums.Role;
 import com.example.communityapplication.model.*;
+import com.example.communityapplication.model.embedded.keys.UserRolesId;
 import com.example.communityapplication.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +84,32 @@ public class ManagementController {
         theModel.addAttribute("community", community);
         theModel.addAttribute("users", users);
         return "management/select-users";
+    }
+
+    @GetMapping("/userDetails")
+    public String showUserDetails(@RequestParam("communityName") String communityName,
+                                  @RequestParam("userName") String userName,
+                                  Model theModel,
+                                  HttpSession session) {
+        Community community = communityService.getByCommunityName(communityName);
+        User user = userService.getByUserName(userName);
+        UserRole userRole = userRoleService.getRoleByUserAndCommunityId(new UserRolesId(user.getId(), community.getId()));
+        theModel.addAttribute("community", community);
+        theModel.addAttribute("user", user);
+        theModel.addAttribute("userRole", userRole);
+        return "management/user-details";
+    }
+    @PostMapping("/userDetails/kick")
+    public String joinCommunity(@RequestParam("communityName") String communityName,
+                                @RequestParam("userName") String userName,
+                                Model theModel,
+                                HttpSession session) {
+        Community community = communityService.getByCommunityName(communityName);
+        User user = userService.getByUserName(userName);
+        UserRole userRole = userRoleService.getRoleByUserAndCommunityId(new UserRolesId(user.getId(), community.getId()));
+        theModel.addAttribute("community", community);
+        theModel.addAttribute("user", user);
+        theModel.addAttribute("userRole", userRole);
+        return "management/user-details";
     }
 }
