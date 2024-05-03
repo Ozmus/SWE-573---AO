@@ -46,13 +46,7 @@ public class ManagementController {
     @GetMapping("/selectCommunity")
     public String showSelectCommunity(HttpSession session,
                                Model theModel) {
-        List<UserRole> userRoles = userRoleService.getRoleByUser((User)session.getAttribute("user"));
-        List<Community> communities = new ArrayList<>();
-        for(UserRole userRole : userRoles){
-            if(userRole.getRole().equals(Role.MOD) || userRole.getRole().equals(Role.OWNER)){
-                communities.add(communityService.getByCommunityId(userRole.getId().getCommunityId()));
-            }
-        }
+        List<Community> communities = communityService.getCommunitiesForManagement((User)session.getAttribute("user"));
         theModel.addAttribute("communities", communities);
         return "management/select-community";
     }
@@ -76,11 +70,9 @@ public class ManagementController {
     @GetMapping("/selectUser")
     public String showUsers(@RequestParam("name") String name, Model theModel, HttpSession session) {
         Community community = communityService.getByCommunityName(name);
-        List<UserRole> userRoles = userRoleService.getRoleByCommunityId(community.getId());
-        List<User> users = new ArrayList<>();
-        for(UserRole userRole : userRoles){
-            users.add(userService.getByUserId(userRole.getId().getUserId()));
-        }
+        User user = (User)session.getAttribute("user");
+        List<User> users = userService.getUsersForManagement(community.getId(), user);
+
         theModel.addAttribute("community", community);
         theModel.addAttribute("users", users);
         return "management/select-users";
@@ -100,16 +92,16 @@ public class ManagementController {
         return "management/user-details";
     }
     @PostMapping("/userDetails/kick")
-    public String joinCommunity(@RequestParam("communityName") String communityName,
+    public String kickUser(@RequestParam("communityName") String communityName,
                                 @RequestParam("userName") String userName,
                                 Model theModel,
                                 HttpSession session) {
         Community community = communityService.getByCommunityName(communityName);
-        User user = userService.getByUserName(userName);
-        UserRole userRole = userRoleService.getRoleByUserAndCommunityId(new UserRolesId(user.getId(), community.getId()));
-        theModel.addAttribute("community", community);
-        theModel.addAttribute("user", user);
-        theModel.addAttribute("userRole", userRole);
-        return "management/user-details";
+        User userToDelete = userService.getByUserName(userName);
+        UserRole userRole = userRoleService.getRoleByUserAndCommunityId(new UserRolesId(userToDelete.getId(), community.getId()));
+        Role kickerRole = userRoleService.getRoleByUserAndCommunityId(new UserRolesId(((User)session.getAttribute("user")).getId(), community.getId())).getRole();
+        userRoleService.kickUser(kickerRole, userToDelete, community);
+
+        return this.showUsers(communityName, theModel, session);
     }
 }

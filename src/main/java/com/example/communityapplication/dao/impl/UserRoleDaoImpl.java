@@ -59,6 +59,11 @@ public class UserRoleDaoImpl implements UserRoleDao {
 	}
 
 	@Override
+	public void deleteUserRole(UserRole userRole) {
+		entityManager.remove(userRole);
+	}
+
+	@Override
 	@Transactional
 	public void save(UserRole theUserRole) {
 		entityManager.merge(theUserRole);

@@ -6,10 +6,11 @@ import com.example.communityapplication.model.User;
 import java.util.List;
 
 public interface CommunityService {
-    public Community getByCommunityId(long id);
-    public Community getByCommunityName(String name);
-    public List<Community> getAllCommunities();
-    public List<Community> getAllCommunitiesByUser(User user);
+    Community getByCommunityId(long id);
+    Community getByCommunityName(String name);
+    List<Community> getAllCommunities();
+    List<Community> getAllCommunitiesByUser(User user);
+    List<Community> getCommunitiesForManagement(User user);
     void createCommunity(Community community, User currentUser);
     void joinCommunity(Community community, User currentUser);
     boolean isExist(String name);
