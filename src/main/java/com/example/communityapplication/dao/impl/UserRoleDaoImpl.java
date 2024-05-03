@@ -48,6 +48,17 @@ public class UserRoleDaoImpl implements UserRoleDao {
 	}
 
 	@Override
+	public List<UserRole> findByCommunityId(int communityId) {
+		TypedQuery<UserRole> theQuery = entityManager.createQuery(
+				"from UserRole where id.communityId = :communityId",
+				UserRole.class
+		);
+		theQuery.setParameter("communityId", communityId);
+
+		return theQuery.getResultList();
+	}
+
+	@Override
 	@Transactional
 	public void save(UserRole theUserRole) {
 		entityManager.merge(theUserRole);

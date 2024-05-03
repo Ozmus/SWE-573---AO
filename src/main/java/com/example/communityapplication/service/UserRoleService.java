@@ -10,6 +10,6 @@ import java.util.List;
 public interface UserRoleService {
 	public UserRole getRoleByUserAndCommunityId(UserRolesId userRolesId);
 	public List<UserRole> getRoleByUser(User user);
+	public List<UserRole> getRoleByCommunityId(int communityId);
 	void save(UserRole userRole);
-
 }

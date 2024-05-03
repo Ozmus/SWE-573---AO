@@ -76,8 +76,8 @@ class CommunityServiceImplTest {
         Community community = new Community("Community1", "Description", "Image URL", false);
         ContentTemplate contentTemplate = new ContentTemplate("Default", community);
 
-        community.setId(1L);
-        when(currentUser.getId()).thenReturn(1L);
+        community.setId(1);
+        when(currentUser.getId()).thenReturn(1);
         when(communityDao.findByCommunityName(community.getName())).thenReturn(community);
         when(contentTemplateDao.findByNameAndCommunityId(contentTemplate.getName(), community)).thenReturn(contentTemplate);
 
@@ -123,11 +123,11 @@ class CommunityServiceImplTest {
     void testJoinCommunity() {
         // Arrange
         Community community = new Community();
-        community.setId(1L);
+        community.setId(1);
         community.setName("Test Community");
 
         User user = new User();
-        user.setId(1L);
+        user.setId(1);
 
         // Act
         communityService.joinCommunity(community, user);

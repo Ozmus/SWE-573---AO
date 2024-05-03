@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public User getByUserId(int userId) {
+		return userDao.findByUserid(userId);
+	}
+
+	@Override
 	public User getByUserName(String userName) {
 		// check the database if the user already exists
 		return userDao.findByUserName(userName);

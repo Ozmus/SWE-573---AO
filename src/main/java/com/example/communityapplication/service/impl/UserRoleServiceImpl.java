@@ -38,6 +38,11 @@ public class UserRoleServiceImpl implements UserRoleService {
 	}
 
 	@Override
+	public List<UserRole> getRoleByCommunityId(int communityId) {
+		return userRoleDao.findByCommunityId(communityId);
+	}
+
+	@Override
 	public void save(UserRole userRole) {
 		if(userRole == null){
 			throw new IllegalArgumentException("UserRole cannot be null");

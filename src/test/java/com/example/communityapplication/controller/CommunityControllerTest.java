@@ -140,7 +140,7 @@ class CommunityControllerTest {
         community.setName(communityName);
 
         User user = new User();
-        user.setId(1L);
+        user.setId(1);
 
         when(session.getAttribute("user")).thenReturn(user);
         when(communityService.getByCommunityName(communityName)).thenReturn(community);
@@ -161,7 +161,7 @@ class CommunityControllerTest {
         String communityName = "Nonexistent Community";
         when(communityService.getByCommunityName(communityName)).thenReturn(null);
         User user = new User();
-        user.setId(1L);
+        user.setId(1);
         when(session.getAttribute("user")).thenReturn(user);
 
         // Act
