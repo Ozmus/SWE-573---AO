@@ -21,25 +21,16 @@ public class ManagementController {
     private UserRoleService userRoleService;
     private UserService userService;
     private ContentTemplateService contentTemplateService;
-    private ContentService contentService;
-    private FieldService fieldService;
-    private FieldValueService fieldValueService;
 
 
     @Autowired
     public ManagementController(CommunityService communityService,
                                 UserRoleService userRoleService,
                                 ContentTemplateService contentTemplateService,
-                                ContentService contentService,
-                                FieldService fieldService,
-                                FieldValueService fieldValueService,
                                 UserService userService) {
         this.communityService = communityService;
         this.userRoleService = userRoleService;
         this.contentTemplateService = contentTemplateService;
-        this.contentService = contentService;
-        this.fieldService = fieldService;
-        this.fieldValueService = fieldValueService;
         this.userService = userService;
     }
 
