@@ -37,15 +37,28 @@
 <div th:replace="navbar.html"></div>
 <br>
 <div class="container">
-    <a th:each="user : ${users}"
-       th:href="@{/management/userDetails(communityName=${community.name}, userName=${user.userName})}"
-       class="text-decoration-none">
         <div class="card clickable">
             <div class="card-body">
                 <h5 class="card-title" th:text="${user.userName}"></h5>
+                <h6 class="card-title" th:text="${userRole.role}"></h6>
+                <form th:action="@{/management/userDetails/kick}" method="post">
+                    <input type="hidden" name="communityName" th:value="${community.name}">
+                    <input type="hidden" name="userName" th:value="${user.userName}">
+                    <button type="submit" class="btn btn-primary mb-4">Kick</button>
+                </form>
+                <form th:action="@{/management/userDetails/promote}" method="post">
+                    <input type="hidden" name="communityName" th:value="${community.name}">
+                    <input type="hidden" name="userName" th:value="${user.userName}">
+                    <button type="submit" class="btn btn-primary mb-4">Promote</button>
+                </form>
+                <form th:action="@{/management/userDetails/depromote}" method="post">
+                    <input type="hidden" name="communityName" th:value="${community.name}">
+                    <input type="hidden" name="userName" th:value="${user.userName}">
+                    <button type="submit" class="btn btn-primary mb-4">Depromote</button>
+                </form>
             </div>
         </div>
-    </a>
+
 </div>
 
 <!-- Bootstrap JavaScript -->

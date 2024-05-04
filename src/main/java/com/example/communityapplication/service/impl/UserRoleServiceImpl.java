@@ -1,12 +1,16 @@
 package com.example.communityapplication.service.impl;
 
 import com.example.communityapplication.dao.UserRoleDao;
+import com.example.communityapplication.enums.Role;
+import com.example.communityapplication.model.Community;
 import com.example.communityapplication.model.User;
 import com.example.communityapplication.model.UserRole;
 import com.example.communityapplication.model.embedded.keys.UserRolesId;
 import com.example.communityapplication.service.UserRoleService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -43,6 +47,43 @@ public class UserRoleServiceImpl implements UserRoleService {
 	}
 
 	@Override
+	@Transactional
+	public boolean kickUser(Role kickerRole, User user, Community community) {
+		UserRole userRole = this.getRoleByUserAndCommunityId(new UserRolesId(user.getId(), community.getId()));
+		if (kickerRole == null) {
+			return false;
+		} else if (kickerRole.equals(Role.MEMBER)) {
+			return false;
+		} else if (kickerRole.equals(Role.MOD) && (userRole.getRole().equals(Role.MOD) || userRole.getRole().equals(Role.OWNER))) {
+			return false;
+		} else {
+			userRoleDao.deleteUserRole(userRole);
+			return true;
+		}
+	}
+
+	@Override
+	public void promoteUser(Role currentUserRole, User userToPromote, Community community) {
+		UserRole userToPromoteRole = this.getRoleByUserAndCommunityId(new UserRolesId(userToPromote.getId(), community.getId()));
+		if( (currentUserRole.equals(Role.MOD) && userToPromoteRole.getRole().equals(Role.MEMBER))
+		|| (currentUserRole.equals(Role.OWNER) && userToPromoteRole.getRole().equals(Role.MEMBER))
+		){
+			userRoleDao.updateUserRole(userToPromoteRole, Role.MOD);
+		} else if (currentUserRole.equals(Role.OWNER) && userToPromoteRole.getRole().equals(Role.MOD)) {
+			userRoleDao.updateUserRole(userToPromoteRole, Role.OWNER);
+		}
+	}
+
+	@Override
+	public void depromoteUser(Role currentUserRole, User userToPromote, Community community) {
+		UserRole userToPromoteRole = this.getRoleByUserAndCommunityId(new UserRolesId(userToPromote.getId(), community.getId()));
+		if(currentUserRole.equals(Role.OWNER) && userToPromoteRole.getRole().equals(Role.MOD)){
+			userRoleDao.updateUserRole(userToPromoteRole, Role.MEMBER);
+		}
+	}
+
+	@Override
+	@Transactional
 	public void save(UserRole userRole) {
 		if(userRole == null){
 			throw new IllegalArgumentException("UserRole cannot be null");

@@ -49,7 +49,7 @@
     <div class="container">
         <!-- Join button -->
         <div th:if="${!isMember}">
-            <form th:action="@{/community/join}" method="get">
+            <form th:action="@{/community/join}" method="post">
                 <input type="hidden" name="name" th:value="${community.name}">
                 <button type="submit" class="btn btn-primary mb-4">Join</button>
             </form>

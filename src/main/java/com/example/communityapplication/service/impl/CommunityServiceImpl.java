@@ -58,6 +58,18 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
+	public List<Community> getCommunitiesForManagement(User user) {
+		List<UserRole> userRoles = userRoleService.getRoleByUser(user);
+		List<Community> communities = new ArrayList<>();
+		for(UserRole userRole : userRoles){
+			if(userRole.getRole().equals(Role.MOD) || userRole.getRole().equals(Role.OWNER)){
+				communities.add(this.getByCommunityId(userRole.getId().getCommunityId()));
+			}
+		}
+		return communities;
+	}
+
+	@Override
 	public void createCommunity(Community theCommunity, User currentUser) {
 		// save community
 		communityDao.save(theCommunity);

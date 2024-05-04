@@ -1,8 +1,10 @@
 package com.example.communityapplication.service;
 
 import com.example.communityapplication.dao.UserRoleDao;
+import com.example.communityapplication.enums.Role;
 import com.example.communityapplication.model.User;
 import com.example.communityapplication.model.UserRole;
+import com.example.communityapplication.model.Community;
 import com.example.communityapplication.model.embedded.keys.UserRolesId;
 import com.example.communityapplication.service.impl.UserRoleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,6 +62,42 @@ class UserRoleServiceImplTest {
         // Then
         assertEquals(expectedUserRoles, actualUserRoles);
         verify(userRoleDao).findByUserId(user.getId());
+    }
+
+    @Test
+    void testKickUserAsMember() {
+        // Given
+        User userToKick = new User();
+        Community community = new Community();
+        community.setId(1);
+        userToKick.setId(1);
+        Role kickerRole = Role.MEMBER;
+
+        // When
+        boolean result = userRoleService.kickUser(kickerRole, userToKick, community);
+
+        // Then
+        assertFalse(result);
+    }
+
+    @Test
+    void testKickUserAsOwner() {
+        // Given
+        User userToKick = new User();
+        Community community = new Community();
+        community.setId(1);
+        userToKick.setId(1);
+        Role kickerRole = Role.OWNER;
+
+        UserRole userRoleToKick = new UserRole(new UserRolesId(userToKick.getId(), community.getId()), Role.MEMBER);
+        when(userRoleService.getRoleByUserAndCommunityId(new UserRolesId(userToKick.getId(), community.getId()))).thenReturn(userRoleToKick);
+
+        // When
+        boolean result = userRoleService.kickUser(kickerRole, userToKick, community);
+
+        // Then
+        assertTrue(result);
+        verify(userRoleDao).deleteUserRole(any());
     }
 
     @Test

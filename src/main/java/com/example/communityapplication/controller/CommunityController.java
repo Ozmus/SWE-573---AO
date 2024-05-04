@@ -63,7 +63,7 @@ public class CommunityController {
 		return "community/community-form";
 	}
 
-	@GetMapping("/join")
+	@PostMapping("/join")
 	public String joinCommunity(@RequestParam("name") String name, Model theModel, HttpSession session) {
 		Community community = communityService.getByCommunityName(name);
 
