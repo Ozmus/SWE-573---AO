@@ -51,28 +51,20 @@ class ManagementControllerTest {
     }
     @Test
     void testShowSelectCommunity() {
-        // Arrange
-        User user = new User();  // Create a dummy user object
-        when(session.getAttribute("user")).thenReturn(user);
-
-        UserRole modRole = new UserRole(new UserRolesId(1, 1), Role.MOD);
-        UserRole ownerRole = new UserRole(new UserRolesId(1, 2), Role.OWNER);
-        List<UserRole> userRoles = List.of(modRole, ownerRole);
-        when(userRoleService.getRoleByUser(user)).thenReturn(userRoles);
-
         Community modCommunity = new Community();
-        when(communityService.getByCommunityId(modRole.getId().getCommunityId())).thenReturn(modCommunity);
-
         Community ownerCommunity = new Community();
-        when(communityService.getByCommunityId(ownerRole.getId().getCommunityId())).thenReturn(ownerCommunity);
+        List<Community> communities = List.of(modCommunity, ownerCommunity);
+
+        when(communityService.getCommunitiesForManagement(any())).thenReturn(communities);
 
         // Act
         String viewName = managementController.showSelectCommunity(session, model);
 
         // Assert
-        assertEquals("management/select-community", viewName);  // Check the view name
-        verify(model).addAttribute("communities", List.of(modCommunity, ownerCommunity));  // Check communities added to the model
+        assertEquals("management/select-community", viewName);
+        verify(model).addAttribute("communities", communities);
     }
+
     @Test
     void testShowSelectOperations() {
         // Arrange

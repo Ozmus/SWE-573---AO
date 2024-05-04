@@ -5,6 +5,7 @@ import com.example.communityapplication.dao.ContentTemplateDao;
 import com.example.communityapplication.dao.FieldDao;
 import com.example.communityapplication.enums.Role;
 import com.example.communityapplication.model.*;
+import com.example.communityapplication.model.embedded.keys.UserRolesId;
 import com.example.communityapplication.service.impl.CommunityServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,22 @@ class CommunityServiceImplTest {
     }
 
     @Test
+    void testGetByCommunityId() {
+        // Arrange
+        int communityId = 1;
+        Community expectedCommunity = new Community("Community1", "Description", "Image URL", false);
+        expectedCommunity.setId(communityId);
+        when(communityDao.findByCommunityId(communityId)).thenReturn(expectedCommunity);
+
+        // Act
+        Community actualCommunity = communityService.getByCommunityId(communityId);
+
+        // Assert
+        assertEquals(expectedCommunity, actualCommunity);
+        verify(communityDao).findByCommunityId(communityId);
+    }
+
+    @Test
     void testGetByCommunityName() {
         // Arrange
         String communityName = "Community1";
@@ -67,6 +84,65 @@ class CommunityServiceImplTest {
         // Assert
         assertEquals(expectedCommunities, actualCommunities);
         verify(communityDao).findAllCommunities();
+    }
+
+    @Test
+    void testGetAllCommunitiesByUser() {
+        // Arrange
+        User user = new User();
+        user.setId(1);
+
+        List<UserRole> userRoles = new ArrayList<>();
+        userRoles.add(new UserRole(new UserRolesId(user.getId(), 1), Role.MEMBER));
+
+        Community community1 = new Community("Community1", "Description1", "Image URL1", false);
+        community1.setId(1);
+
+        List<Community> expectedCommunities = List.of(community1);
+
+        when(userRoleService.getRoleByUser(user)).thenReturn(userRoles);
+        when(communityDao.findByCommunityId(userRoles.get(0).getId().getCommunityId())).thenReturn(community1);
+
+        // Act
+        List<Community> actualCommunities = communityService.getAllCommunitiesByUser(user);
+
+        // Assert
+        assertEquals(expectedCommunities, actualCommunities);
+        verify(userRoleService).getRoleByUser(user);
+        verify(communityDao).findByCommunityId(userRoles.get(0).getId().getCommunityId());
+    }
+
+    @Test
+    void testGetCommunitiesForManagement() {
+        // Arrange
+        User user = new User();
+        user.setId(1);
+
+        UserRole modRole = new UserRole(new UserRolesId(user.getId(), 1), Role.MOD);
+        UserRole ownerRole = new UserRole(new UserRolesId(user.getId(), 2), Role.OWNER);
+
+        List<UserRole> userRoles = List.of(modRole, ownerRole);
+
+        Community modCommunity = new Community("Community1", "Description1", "Image URL1", false);
+        modCommunity.setId(1);
+
+        Community ownerCommunity = new Community("Community2", "Description2", "Image URL2", false);
+        ownerCommunity.setId(2);
+
+        List<Community> expectedCommunities = List.of(modCommunity, ownerCommunity);
+
+        when(userRoleService.getRoleByUser(user)).thenReturn(userRoles);
+        when(communityDao.findByCommunityId(modRole.getId().getCommunityId())).thenReturn(modCommunity);
+        when(communityDao.findByCommunityId(ownerRole.getId().getCommunityId())).thenReturn(ownerCommunity);
+
+        // Act
+        List<Community> actualCommunities = communityService.getCommunitiesForManagement(user);
+
+        // Assert
+        assertEquals(expectedCommunities, actualCommunities);
+        verify(userRoleService).getRoleByUser(user);
+        verify(communityDao).findByCommunityId(modRole.getId().getCommunityId());
+        verify(communityDao).findByCommunityId(ownerRole.getId().getCommunityId());
     }
 
     @Test
@@ -138,5 +214,26 @@ class CommunityServiceImplTest {
                         userRole.getId().getCommunityId() == community.getId() &&
                         userRole.getRole() == Role.MEMBER
         ));
+    }
+
+    @Test
+    void testIsMember() {
+        // Arrange
+        Community community = new Community();
+        community.setId(1);
+
+        User user = new User();
+        user.setId(1);
+
+        UserRole userRole = new UserRole(new UserRolesId(user.getId(), community.getId()), Role.MEMBER);
+
+        when(userRoleService.getRoleByUserAndCommunityId(any(UserRolesId.class))).thenReturn(userRole);
+
+        // Act
+        boolean isMember = communityService.isMember(community, user);
+
+        // Assert
+        assertTrue(isMember);
+        verify(userRoleService).getRoleByUserAndCommunityId(any(UserRolesId.class));
     }
 }
