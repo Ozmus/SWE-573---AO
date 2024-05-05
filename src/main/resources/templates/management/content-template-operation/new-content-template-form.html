@@ -23,11 +23,9 @@
             </div>
 
             <div class="card-body">
-
                 <div class="card-text">
-
                     <!-- Create Content Template Form -->
-                    <form action="#" th:action="@{/contentTemplate/newContentTemplate(communityName=${community.name}, contentTemplateId=${newContentTemplate.id})}"
+                    <form action="#" th:action="@{/management/contentTemplate/addContentTemplate(contentTemplateId=${contentTemplate.id})}"
                           th:object="${newContentTemplate}"
                           method="POST" class="form-horizontal">
 
@@ -43,23 +41,6 @@
                             </ul>
                         </div>
 
-                        <a th:href="@{/management/contentTemplate/newField(communityName=${community.name}, contentTemplateId=${newContentTemplate.id})}" method="get">
-                            <div class="card clickable">
-                                <div class="card-body">
-                                    <h5 class="card-title" text="Add New Field"></h5>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a th:each="field : ${fields}"
-                           th:href="@{/content/createContent(contentTemplateId=${newContentTemplate.id})}" class="text-decoration-none">
-                            <div class="card clickable">
-                                <div class="card-body">
-                                    <h5 class="card-title" th:text="${field.name}"></h5>
-                                </div>
-                            </div>
-                        </a>
-
                         <!-- Create Button -->
                         <div style="margin-top: 10px" class="form-group">
                             <div class="col-sm-6 controls">
@@ -68,6 +49,23 @@
                         </div>
 
                     </form>
+
+                    <a th:href="@{/management/contentTemplate/newFieldForm(contentTemplateId=${contentTemplate.id})}" method="get">
+                        <div class="card clickable">
+                            <div class="card-body">
+                                <h5 class="card-title">Add New Field</h5>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a th:each="field : ${fields}"
+                       th:href="@{/content/createContent(contentTemplateId=${contentTemplate.id})}" class="text-decoration-none">
+                        <div class="card clickable">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${field.name}"></h5>
+                            </div>
+                        </div>
+                    </a>
 
                 </div>
 

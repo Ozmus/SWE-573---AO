@@ -132,7 +132,7 @@ public class ManagementController {
         List<ContentTemplate> contentTemplates = contentTemplateService.getByCommunity(community);
         theModel.addAttribute("community", community);
         theModel.addAttribute("contentTemplates", contentTemplates);
-        return "management/content-template-operation/select-content-template";
+        return "/management/content-template-operation/select-content-template";
     }
 
     @GetMapping("/contentTemplate/create")
@@ -148,12 +148,13 @@ public class ManagementController {
         }
         List<Field> fields = fieldService.getFieldsByContentTemplateId(contentTemplate.getId());
         theModel.addAttribute("community", community);
-        theModel.addAttribute("newContentTemplate", contentTemplate);
+        theModel.addAttribute("contentTemplate", contentTemplate);
+        theModel.addAttribute("newContentTemplate", new ContentTemplate("", community));
         theModel.addAttribute("fields", fields);
-        return "management/content-template-operation/new-content-template-form";
+        return "/management/content-template-operation/new-content-template-form";
     }
 
-    @PostMapping("/contentTemplate/newContentTemplate")
+    @PostMapping("/contentTemplate/addContentTemplate")
     public String addNewContentTemplate(@Valid @ModelAttribute("newContentTemplate") ContentTemplate newContentTemplate,
                                 @RequestParam("contentTemplateId") String contentTemplateId,
                                 Model theModel,
@@ -161,7 +162,7 @@ public class ManagementController {
                                 BindingResult theBindingResult) {
         // form validation
         if (theBindingResult.hasErrors()){
-            return "management/content-template-operation/new-content-template-form";
+            return "/management/content-template-operation/new-content-template-form";
         }
         ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
         contentTemplate.setName(newContentTemplate.getName());
@@ -170,14 +171,13 @@ public class ManagementController {
         return this.showContentTemplate(contentTemplate.getCommunity().getName(), theModel, session);
     }
 
-    @GetMapping("/contentTemplate/newField")
+    @GetMapping("/contentTemplate/newFieldForm")
     public String showCreateFieldForm(@RequestParam(value = "contentTemplateId") String contentTemplateId,
                                       Model theModel) {
         ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
-        Field newField = fieldService.save(new Field("","", contentTemplate));
 
         theModel.addAttribute("contentTemplate", contentTemplate);
-        theModel.addAttribute("newField", newField);
+        theModel.addAttribute("newField", new Field("","", contentTemplate));
         return "management/content-template-operation/field/field-form";
     }
 
@@ -185,11 +185,10 @@ public class ManagementController {
     public String addNewField(@Valid @ModelAttribute("newField") Field newField,
                               @RequestParam(value = "contentTemplateId") String contentTemplateId,
                               Model theModel,
-                              HttpSession session,
                               BindingResult theBindingResult) {
         // form validation
         if (theBindingResult.hasErrors()){
-            return "management/content-template-operation/new-content-template-form";
+            return "/management/content-template-operation/new-content-template-form";
         }
         ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
         newField.setContentTemplate(contentTemplate);
