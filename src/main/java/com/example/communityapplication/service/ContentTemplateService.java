@@ -9,5 +9,6 @@ import java.util.List;
 public interface ContentTemplateService {
     List<ContentTemplate> getByCommunity(Community community);
     ContentTemplate getById(int id);
+    void deleteContentTemplateById(int id);
     ContentTemplate save(ContentTemplate contentTemplate);
 }

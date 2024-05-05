@@ -63,6 +63,11 @@
                         <div class="card clickable">
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${field.name}"></h5>
+                                <form th:action="@{/management/contentTemplate/deleteField}" method="post">
+                                    <input type="hidden" name="contentTemplateId" th:value="${contentTemplate.id}">
+                                    <input type="hidden" name="fieldId" th:value="${field.id}">
+                                    <button type="submit" class="btn btn-primary mb-4">Delete Field</button>
+                                </form>
                             </div>
                         </div>
                     </a>

@@ -11,4 +11,5 @@ public interface ContentTemplateDao {
     List<ContentTemplate> findByCommunityId(Community community);
     ContentTemplate findById(int id);
     ContentTemplate save(ContentTemplate theContentTemplate);
+    void delete(ContentTemplate theContentTemplate);
 }

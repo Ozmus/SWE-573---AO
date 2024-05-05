@@ -171,6 +171,16 @@ public class ManagementController {
         return this.showContentTemplate(contentTemplate.getCommunity().getName(), theModel, session);
     }
 
+    @PostMapping("/contentTemplate/deleteContentTemplate")
+    public String deleteContentTemplate(@RequestParam("contentTemplateId") String contentTemplateId,
+                                        Model theModel,
+                                        HttpSession session) {
+        ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
+        contentTemplateService.deleteContentTemplateById(contentTemplate.getId());
+
+        return this.showContentTemplate(contentTemplate.getCommunity().getName(), theModel, session);
+    }
+
     @GetMapping("/contentTemplate/newFieldForm")
     public String showCreateFieldForm(@RequestParam(value = "contentTemplateId") String contentTemplateId,
                                       @RequestParam(value = "fieldId", required = false) String fieldId,
@@ -204,6 +214,16 @@ public class ManagementController {
         field.setName(newField.getName());
         field.setDataType(newField.getDataType());
         fieldService.save(field);
+
+        return this.showCreateContentTemplateForm(contentTemplate.getCommunity().getName(), contentTemplateId, theModel);
+    }
+
+    @PostMapping("/contentTemplate/deleteField")
+    public String deleteField(@RequestParam("contentTemplateId") String contentTemplateId,
+                              @RequestParam("fieldId") String fieldId,
+                              Model theModel) {
+        ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
+        fieldService.delete(Integer.parseInt(fieldId));
 
         return this.showCreateContentTemplateForm(contentTemplate.getCommunity().getName(), contentTemplateId, theModel);
     }

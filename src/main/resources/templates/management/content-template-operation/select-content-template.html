@@ -46,6 +46,10 @@
         <div class="card clickable">
             <div class="card-body">
                 <h5 class="card-title" th:text="${contentTemplate.name}"></h5>
+                <form th:action="@{/management/contentTemplate/deleteContentTemplate}" method="post">
+                    <input type="hidden" name="contentTemplateId" th:value="${contentTemplate.id}">
+                    <button type="submit" class="btn btn-primary mb-4">Delete Content Template</button>
+                </form>
             </div>
         </div>
     </a>
