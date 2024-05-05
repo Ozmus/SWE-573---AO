@@ -25,6 +25,11 @@ public class FieldServiceImpl implements FieldService {
 	}
 
 	@Override
+	public Field getFieldById(int fieldId) {
+		return fieldDao.findByFieldId(fieldId);
+	}
+
+	@Override
 	public List<Field> getFieldsByContentTemplateId(int contentTemplateId) {
 		ContentTemplate contentTemplate = contentTemplateService.getById(contentTemplateId);
 		if(contentTemplate != null) {

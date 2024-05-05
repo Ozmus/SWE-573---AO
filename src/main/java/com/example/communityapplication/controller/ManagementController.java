@@ -173,26 +173,37 @@ public class ManagementController {
 
     @GetMapping("/contentTemplate/newFieldForm")
     public String showCreateFieldForm(@RequestParam(value = "contentTemplateId") String contentTemplateId,
+                                      @RequestParam(value = "fieldId", required = false) String fieldId,
                                       Model theModel) {
         ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
 
+        Field field;
+        if(fieldId == null){
+            field = fieldService.save(new Field("","", contentTemplate));
+        }
+        else{
+            field = fieldService.getFieldById(Integer.parseInt(fieldId));
+        }
         theModel.addAttribute("contentTemplate", contentTemplate);
-        theModel.addAttribute("newField", new Field("","", contentTemplate));
+        theModel.addAttribute("newField", field);
         return "management/content-template-operation/field/field-form";
     }
 
     @PostMapping("/contentTemplate/addField")
     public String addNewField(@Valid @ModelAttribute("newField") Field newField,
                               @RequestParam(value = "contentTemplateId") String contentTemplateId,
+                              @RequestParam("fieldId") String fieldId,
                               Model theModel,
                               BindingResult theBindingResult) {
         // form validation
         if (theBindingResult.hasErrors()){
             return "/management/content-template-operation/new-content-template-form";
         }
+        Field field = fieldService.getFieldById(Integer.parseInt(fieldId));
         ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
-        newField.setContentTemplate(contentTemplate);
-        fieldService.save(newField);
+        field.setName(newField.getName());
+        field.setDataType(newField.getDataType());
+        fieldService.save(field);
 
         return this.showCreateContentTemplateForm(contentTemplate.getCommunity().getName(), contentTemplateId, theModel);
     }

@@ -24,7 +24,7 @@ public class FieldDaoImpl implements FieldDao {
 	}
 
 	@Override
-	public Field findByFieldId(long id) {
+	public Field findByFieldId(int id) {
 		TypedQuery<Field> theQuery = entityManager.createQuery("from Field where id=:fId", Field.class);
 		theQuery.setParameter("fId", id);
 

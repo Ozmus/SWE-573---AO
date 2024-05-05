@@ -42,7 +42,7 @@
         <button type="submit" class="btn btn-primary mb-4">Add New Content Template</button>
     </form>
     <a th:each="contentTemplate : ${contentTemplates}"
-       th:href="@{/content/createContent(contentTemplateId=${contentTemplate.id})}" class="text-decoration-none">
+       th:href="@{/management/contentTemplate/create(communityName=${community.name}, contentTemplateId=${contentTemplate.id})}" class="text-decoration-none">
         <div class="card clickable">
             <div class="card-body">
                 <h5 class="card-title" th:text="${contentTemplate.name}"></h5>

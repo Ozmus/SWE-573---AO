@@ -59,7 +59,7 @@
                     </a>
 
                     <a th:each="field : ${fields}"
-                       th:href="@{/content/createContent(contentTemplateId=${contentTemplate.id})}" class="text-decoration-none">
+                       th:href="@{/management/contentTemplate/newFieldForm(contentTemplateId=${contentTemplate.id}, fieldId=${field.id})}" class="text-decoration-none">
                         <div class="card clickable">
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${field.name}"></h5>

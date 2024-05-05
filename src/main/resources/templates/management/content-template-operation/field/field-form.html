@@ -27,7 +27,7 @@
                 <div class="card-text">
 
                     <!-- Create Field Form -->
-                    <form action="#" th:action="@{/management/contentTemplate/addField(contentTemplateId=${contentTemplate.id})}"
+                    <form action="#" th:action="@{/management/contentTemplate/addField(contentTemplateId=${contentTemplate.id}, fieldId=${newField.id})}"
                           th:object="${newField}"
                           method="POST" class="form-horizontal">
 
