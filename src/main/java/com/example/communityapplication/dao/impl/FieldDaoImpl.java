@@ -54,7 +54,13 @@ public class FieldDaoImpl implements FieldDao {
 
 	@Override
 	@Transactional
-	public void save(Field theField) {
-		entityManager.merge(theField);
+	public Field save(Field theField) {
+		return entityManager.merge(theField);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Field theField) {
+		entityManager.remove(theField);
 	}
 }

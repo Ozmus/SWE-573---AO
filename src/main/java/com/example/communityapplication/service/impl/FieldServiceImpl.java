@@ -34,4 +34,15 @@ public class FieldServiceImpl implements FieldService {
 			return new ArrayList<>();
 		}
 	}
+
+	@Override
+	public Field save(Field field) {
+		return fieldDao.save(field);
+	}
+
+	@Override
+	public void delete(int fieldId) {
+		Field field = fieldDao.findByFieldId(fieldId);
+		fieldDao.delete(field);
+	}
 }

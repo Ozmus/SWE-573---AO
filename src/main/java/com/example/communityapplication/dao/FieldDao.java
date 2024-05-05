@@ -8,5 +8,6 @@ import java.util.List;
 public interface FieldDao {
     Field findByFieldId(long id);
     List<Field> findByContentTemplateId(ContentTemplate contentTemplate);
-    void save(Field theField);
+    Field save(Field theField);
+    void delete(Field theField);
 }

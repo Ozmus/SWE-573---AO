@@ -9,6 +9,7 @@ import com.example.communityapplication.model.embedded.keys.UserRolesId;
 import com.example.communityapplication.service.CommunityService;
 import com.example.communityapplication.service.ContentTemplateService;
 import com.example.communityapplication.service.UserRoleService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +34,10 @@ public class ContentTemplateServiceImpl implements ContentTemplateService {
 	@Override
 	public ContentTemplate getById(int id) {
 		return this.contentTemplateDao.findById(id);
+	}
+
+	@Override
+	public ContentTemplate save(ContentTemplate contentTemplate) {
+		return this.contentTemplateDao.save(contentTemplate);
 	}
 }

@@ -37,6 +37,10 @@
 <div th:replace="navbar.html"></div>
 <br>
 <div class="container">
+    <form th:action="@{/management/contentTemplate/create}" method="get">
+        <input type="hidden" name="communityName" th:value="${community.name}">
+        <button type="submit" class="btn btn-primary mb-4">Add New Content Template</button>
+    </form>
     <a th:each="contentTemplate : ${contentTemplates}"
        th:href="@{/content/createContent(contentTemplateId=${contentTemplate.id})}" class="text-decoration-none">
         <div class="card clickable">

@@ -9,5 +9,7 @@ import com.example.communityapplication.model.embedded.keys.UserRolesId;
 import java.util.List;
 
 public interface FieldService {
-	public List<Field> getFieldsByContentTemplateId(int contentTemplateId);
+	List<Field> getFieldsByContentTemplateId(int contentTemplateId);
+	Field save(Field field);
+	void delete(int field);
 }

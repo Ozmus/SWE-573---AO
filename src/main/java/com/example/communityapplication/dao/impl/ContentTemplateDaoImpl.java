@@ -72,7 +72,7 @@ public class ContentTemplateDaoImpl implements ContentTemplateDao {
 
 	@Override
 	@Transactional
-	public void save(ContentTemplate theContentTemplate) {
-		entityManager.merge(theContentTemplate);
+	public ContentTemplate save(ContentTemplate theContentTemplate) {
+		return entityManager.merge(theContentTemplate);
 	}
 }
