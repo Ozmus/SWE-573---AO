@@ -6,7 +6,8 @@ import com.example.communityapplication.model.Field;
 import java.util.List;
 
 public interface FieldDao {
-    Field findByFieldId(long id);
+    Field findByFieldId(int id);
     List<Field> findByContentTemplateId(ContentTemplate contentTemplate);
-    void save(Field theField);
+    Field save(Field theField);
+    void delete(Field theField);
 }

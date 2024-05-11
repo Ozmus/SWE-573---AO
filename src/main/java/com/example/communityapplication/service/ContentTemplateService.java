@@ -7,6 +7,8 @@ import com.example.communityapplication.model.User;
 import java.util.List;
 
 public interface ContentTemplateService {
-    public List<ContentTemplate> getByCommunity(Community community);
+    List<ContentTemplate> getByCommunity(Community community);
     ContentTemplate getById(int id);
+    void deleteContentTemplateById(int id);
+    ContentTemplate save(ContentTemplate contentTemplate);
 }
