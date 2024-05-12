@@ -3,7 +3,7 @@ package com.example.communityapplication.service.impl;
 import com.example.communityapplication.dao.CommunityDao;
 import com.example.communityapplication.dao.ContentTemplateDao;
 import com.example.communityapplication.dao.FieldDao;
-import com.example.communityapplication.enums.DataTypes;
+import com.example.communityapplication.enums.DataType;
 import com.example.communityapplication.enums.Role;
 import com.example.communityapplication.model.*;
 import com.example.communityapplication.model.embedded.keys.UserRolesId;
@@ -77,7 +77,7 @@ public class CommunityServiceImpl implements CommunityService {
 		userRoleService.save(new UserRole(new UserRolesId(currentUser.getId(), createdCommunity.getId()), Role.OWNER));
 		contentTemplateDao.save(new ContentTemplate("Default", createdCommunity));
 		ContentTemplate createdContentTemplate = contentTemplateDao.findByNameAndCommunityId("Default", createdCommunity);
-		fieldDao.save(new Field("Text", DataTypes.String.toString(), createdContentTemplate));
+		fieldDao.save(new Field("Text", DataType.TEXT, createdContentTemplate));
 	}
 
 	@Override

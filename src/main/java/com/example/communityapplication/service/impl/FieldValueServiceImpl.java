@@ -45,6 +45,14 @@ public class FieldValueServiceImpl implements FieldValueService {
 			for (int fieldId : contentForm.getFieldValues().keySet()) {
 				this.save(new FieldValue(new FieldValueId(content.getId(), fieldId), contentForm.getFieldValue(fieldId)));
 			}
+
+			for (int fieldId : contentForm.getFieldValuesForGeolocationLatitude().keySet()) {
+				StringBuilder geolocationStr = new StringBuilder();
+				geolocationStr.append(contentForm.getFieldValueForGeolocationLatitude(fieldId));
+				geolocationStr.append(",");
+				geolocationStr.append(contentForm.getFieldValueForGeolocationLongitude(fieldId));
+				this.save(new FieldValue(new FieldValueId(content.getId(), fieldId), geolocationStr.toString()));
+			}
 		}
 	}
 }

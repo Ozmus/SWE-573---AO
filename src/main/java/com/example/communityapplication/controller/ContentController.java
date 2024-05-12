@@ -1,8 +1,8 @@
 package com.example.communityapplication.controller;
 
-import com.example.communityapplication.dao.ContentTemplateDao;
 import com.example.communityapplication.model.*;
 import com.example.communityapplication.service.*;
+import com.example.communityapplication.enums.DataType;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +70,10 @@ public class ContentController {
     }
 
     @GetMapping("/createContent")
-    public String showCreateForm(@RequestParam("contentTemplateId") String contentTemplateId, @ModelAttribute ContentForm contentForm, Model theModel, HttpSession session) {
+    public String showCreateForm(@RequestParam("contentTemplateId") String contentTemplateId,
+                                 @ModelAttribute ContentForm contentForm,
+                                 Model theModel,
+                                 HttpSession session) {
         // Fetch content template and fields based on content template ID
         ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
         List<Field> fields = fieldService.getFieldsByContentTemplateId(Integer.parseInt(contentTemplateId));
@@ -85,7 +87,9 @@ public class ContentController {
     }
 
     @PostMapping("/createContentSubmit")
-    public String createContentSubmit(@RequestParam("contentTemplateId") String contentTemplateId, @ModelAttribute("contentForm") ContentForm contentForm, HttpSession session) {
+    public String createContentSubmit(@RequestParam("contentTemplateId") String contentTemplateId,
+                                      @ModelAttribute("contentForm") ContentForm contentForm,
+                                      HttpSession session) {
         User user = (User) session.getAttribute("user");
         contentForm.setContentTemplate(contentTemplateService.getById(Integer.parseInt(contentTemplateId)));
 

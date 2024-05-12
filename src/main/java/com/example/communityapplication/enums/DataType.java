@@ -1,5 +1,5 @@
 package com.example.communityapplication.enums;
 
-public enum DataTypes {
+public enum DataType {
     TEXT, IMAGE, NUMBER, GEOLOCATION
 }

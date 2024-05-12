@@ -69,7 +69,7 @@ DROP TABLE IF EXISTS `fields`;
 CREATE TABLE `fields` (
                             `id` int NOT NULL AUTO_INCREMENT,
                             `name` varchar(50) NOT NULL,
-                            `data_type` varchar(50) NOT NULL,
+                            `data_type` ENUM('TEXT', 'NUMBER', 'IMAGE', 'GEOLOCATION'),
                             `content_template_id` int NOT NULL,
                             PRIMARY KEY (`id`),
                             FOREIGN KEY (content_template_id) REFERENCES content_templates(id)
