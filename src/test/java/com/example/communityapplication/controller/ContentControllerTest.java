@@ -1,5 +1,6 @@
 package com.example.communityapplication.controller;
 
+import com.example.communityapplication.enums.DataType;
 import com.example.communityapplication.enums.Role;
 import com.example.communityapplication.model.*;
 import com.example.communityapplication.model.embedded.keys.UserRolesId;
@@ -104,7 +105,7 @@ public class ContentControllerTest {
 
         // Set up mocks for `getById` and `getFieldsByContentTemplateId`
         when(contentTemplateService.getById(anyInt())).thenReturn(contentTemplate);
-        List<Field> fields = Arrays.asList(new Field("anyFieldName", "String", contentTemplate));
+        List<Field> fields = Arrays.asList(new Field("anyFieldName", DataType.TEXT, contentTemplate));
         when(fieldService.getFieldsByContentTemplateId(anyInt())).thenReturn(fields);
 
         // Call the method under test

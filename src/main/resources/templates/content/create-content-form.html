@@ -16,13 +16,40 @@
         <form action="#" th:action="@{/content/createContentSubmit(contentTemplateId=${contentTemplate.id})}"
               th:object="${contentForm}" method="POST" class="form-horizontal">
 
+            <label th:text="Title"></label>
+            <input type="text" class="form-control" th:field="*{title}"/>
+
             <!-- Display fields dynamically based on the content template -->
             <div th:each="field : ${fields}">
                 <div class="form-group">
-                    <label th:text="Title"></label>
-                    <input type="text" class="form-control" th:field="*{title}" />
-                    <label th:text="${field.name}"></label>
-                    <input type="text" class="form-control" th:field="*{fieldValues[__${field.id}__]}" />
+                    <div th:if="${field.dataType.toString()} == 'GEOLOCATION'">
+                        <label for="latitude">
+                            Latitude:
+                        </label>
+                        <input type="text" inputmode="decimal"
+                               id="latitude" name="float-input"
+                               class="form-control" th:field="*{fieldValuesForGeolocationLatitude[__${field.id}__]}"
+                               pattern="[0-9]*[.,]?[0-9]*">
+
+                        <label for="longitude">
+                            Longitude:
+                        </label>
+                        <input type="text" inputmode="decimal"
+                               id="longitude" name="float-input"
+                               class="form-control" th:field="*{fieldValuesForGeolocationLongitude[__${field.id}__]}"
+                               pattern="[0-9]*[.,]?[0-9]*">
+                    </div>
+                    <div th:if="${field.dataType.toString()} == 'IMAGE'">
+
+                    </div>
+                    <div th:if="${field.dataType.toString()} == 'TEXT'">
+                        <label th:text="${field.name}"></label>
+                        <input type="text" class="form-control" th:field="*{fieldValues[__${field.id}__]}" />
+                    </div>
+                    <div th:if="${field.dataType.toString()} == 'NUMBER'">
+                        <label th:text="${field.name}"></label>
+                        <input type="number" class="form-control" th:field="*{fieldValues[__${field.id}__]}" min="-10000" max="10000">
+                    </div>
                 </div>
             </div>
 

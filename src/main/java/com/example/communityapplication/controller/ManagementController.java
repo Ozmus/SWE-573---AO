@@ -1,5 +1,6 @@
 package com.example.communityapplication.controller;
 
+import com.example.communityapplication.enums.DataType;
 import com.example.communityapplication.enums.Role;
 import com.example.communityapplication.model.*;
 import com.example.communityapplication.model.embedded.keys.UserRolesId;
@@ -189,7 +190,7 @@ public class ManagementController {
 
         Field field;
         if(fieldId == null){
-            field = fieldService.save(new Field("","", contentTemplate));
+            field = fieldService.save(new Field("", DataType.TEXT, contentTemplate));
         }
         else{
             field = fieldService.getFieldById(Integer.parseInt(fieldId));

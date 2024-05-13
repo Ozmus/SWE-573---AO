@@ -45,10 +45,15 @@
 
                         <!-- Data Type -->
                         <div style="margin-bottom: 25px" class="input-group">
-                            <input type="text" th:field="*{dataType}" placeholder="data type (*)" class="form-control" />
+                            <select th:field="*{dataType}" class="form-control">
+                                <option value="TEXT">Text</option>
+                                <option value="IMAGE">Image</option>
+                                <option value="NUMBER">Number</option>
+                                <option value="GEOLOCATION">Geolocation</option>
+                            </select>
                         </div>
 
-                        <div th:if="${#fields.hasErrors('name')}"
+                        <div th:if="${#fields.hasErrors('dataType')}"
                              style="margin-bottom: 25px" class="text-danger">
                             <ul>
                                 <li th:each="err : ${#fields.errors('dataType')}" th:text="'Data Type ' + ${err}" />
