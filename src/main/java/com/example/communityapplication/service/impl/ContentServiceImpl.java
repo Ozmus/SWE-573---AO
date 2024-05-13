@@ -38,6 +38,12 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
+	public List<ContentCard> searchByTitle(String title) {
+		List<ContentCard> contentCards = setContentCardsByContents(contentDao.searchByTitle(title));
+		return contentCards;
+	}
+
+	@Override
 	public List<ContentCard> getContentCardsByUser(User user) {
 		Stack<ContentTemplate> contentTemplates = new Stack<>();
 		for(Community community : communityService.getAllCommunitiesByUser(user)){
@@ -53,6 +59,11 @@ public class ContentServiceImpl implements ContentService {
 			}
 		}
 
+		List<ContentCard> contentCards = setContentCardsByContents(contents);
+		return contentCards;
+	}
+
+	private List<ContentCard> setContentCardsByContents(List<Content> contents){
 		List<ContentCard> contentCards = new ArrayList<>();
 		for(Content content : contents){
 			ContentCard contentCard = new ContentCard();

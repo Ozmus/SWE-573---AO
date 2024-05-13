@@ -58,4 +58,10 @@ public class ContentDaoImpl implements ContentDao {
 		return entityManager.merge(theContent);
 	}
 
+	@Override
+	public List<Content> searchByTitle(String title) {
+		TypedQuery<Content> query = entityManager.createQuery("SELECT c FROM Content c WHERE c.title LIKE :title", Content.class);
+		query.setParameter("title", "%" + title + "%");
+		return query.getResultList();
+	}
 }

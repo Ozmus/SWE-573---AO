@@ -2,7 +2,6 @@ package com.example.communityapplication.controller;
 
 import com.example.communityapplication.model.*;
 import com.example.communityapplication.service.*;
-import com.example.communityapplication.enums.DataType;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
