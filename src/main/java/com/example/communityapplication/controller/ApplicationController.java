@@ -43,7 +43,7 @@ public class ApplicationController {
                                 HttpSession session,
                                 Model theModel) {
         try {
-            List<ContentCard> contentCards = contentService.searchByTitle(keyword);
+            List<ContentCard> contentCards = contentService.search(keyword);
             theModel.addAttribute("contentCards", contentCards);
         }
         catch (Exception e){

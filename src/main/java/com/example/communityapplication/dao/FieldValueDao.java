@@ -9,5 +9,6 @@ import java.util.List;
 public interface FieldValueDao {
     FieldValue findByFieldValueId(long id);
     List<FieldValue> findByContentId(Content content);
+    List<Content> search(String keyword);
     void save(FieldValue theFieldValue);
 }
