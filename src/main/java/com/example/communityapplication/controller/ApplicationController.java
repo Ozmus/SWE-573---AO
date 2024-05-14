@@ -25,6 +25,7 @@ public class ApplicationController {
     public ApplicationController(ContentService contentService) {
         this.contentService = contentService;
     }
+
     @GetMapping("/")
     public String showHome(HttpSession session,
                            Model theModel) {

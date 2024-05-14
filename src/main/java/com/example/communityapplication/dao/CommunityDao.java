@@ -8,5 +8,5 @@ public interface CommunityDao {
     Community findByCommunityName(String name);
     List<Community> findAllCommunities();
     void save(Community theCommunity);
-
+    List<Community> searchCommunities(String keyword);
 }

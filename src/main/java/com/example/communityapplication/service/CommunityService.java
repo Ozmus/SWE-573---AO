@@ -15,4 +15,5 @@ public interface CommunityService {
     void joinCommunity(Community community, User currentUser);
     boolean isExist(String name);
     boolean isMember(Community community, User currentUser);
+    List<Community> searchCommunities(String keyword);
 }

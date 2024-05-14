@@ -2,6 +2,7 @@ package com.example.communityapplication.dao.impl;
 
 import com.example.communityapplication.dao.CommunityDao;
 import com.example.communityapplication.model.Community;
+import com.example.communityapplication.model.Content;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +70,10 @@ public class CommunityDaoImpl implements CommunityDao {
 		entityManager.merge(theCommunity);
 	}
 
-
+	@Override
+	public List<Community> searchCommunities(String keyword) {
+		TypedQuery<Community> query = entityManager.createQuery("SELECT c FROM Community c WHERE c.name LIKE :keyword OR c.description LIKE :keyword ", Community.class);
+		query.setParameter("keyword", "%" + keyword + "%");
+		return query.getResultList();
+	}
 }

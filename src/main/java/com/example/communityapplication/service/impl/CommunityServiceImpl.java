@@ -95,4 +95,9 @@ public class CommunityServiceImpl implements CommunityService {
 	public boolean isMember(Community community, User currentUser) {
 		return userRoleService.getRoleByUserAndCommunityId(new UserRolesId(currentUser.getId(), community.getId())) != null;
 	}
+
+	@Override
+	public List<Community> searchCommunities(String keyword) {
+		return communityDao.searchCommunities(keyword);
+	}
 }
