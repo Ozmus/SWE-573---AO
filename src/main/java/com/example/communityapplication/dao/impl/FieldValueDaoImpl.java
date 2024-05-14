@@ -43,6 +43,13 @@ public class FieldValueDaoImpl implements FieldValueDao {
 	}
 
 	@Override
+	public List<Content> search(String keyword) {
+		TypedQuery<Content> query = entityManager.createQuery("SELECT fv.content FROM FieldValue fv WHERE fv.value LIKE :keyword", Content.class);
+		query.setParameter("keyword", "%" + keyword + "%");
+		return query.getResultList();
+	}
+
+	@Override
 	@Transactional
 	public void save(FieldValue theFieldValue) {
 		entityManager.merge(theFieldValue);

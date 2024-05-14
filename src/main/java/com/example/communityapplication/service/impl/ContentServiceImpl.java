@@ -1,6 +1,7 @@
 package com.example.communityapplication.service.impl;
 
 import com.example.communityapplication.dao.ContentDao;
+import com.example.communityapplication.dao.FieldValueDao;
 import com.example.communityapplication.model.*;
 import com.example.communityapplication.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +16,19 @@ public class ContentServiceImpl implements ContentService {
 	private CommunityService communityService;
 	private ContentTemplateService contentTemplateService;
 	private FieldValueService fieldValueService;
+	private FieldValueDao fieldValueDao;
 
 	@Autowired
 	public ContentServiceImpl(ContentDao contentDao,
 							  CommunityService communityService,
 							  ContentTemplateService contentTemplateService,
-							  FieldValueService fieldValueService) {
+							  FieldValueService fieldValueService,
+							  FieldValueDao fieldValueDao) {
 		this.contentDao = contentDao;
 		this.communityService = communityService;
 		this.contentTemplateService = contentTemplateService;
 		this.fieldValueService = fieldValueService;
+		this.fieldValueDao = fieldValueDao;
 	}
 
 	@Override
@@ -35,6 +39,25 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public Content saveContent(ContentForm contentForm, User user) {
 		return contentDao.save(new Content(contentForm.getTitle(), user, contentForm.getContentTemplate()));
+	}
+
+	@Override
+	public List<ContentCard> searchByTitle(String title) {
+		List<ContentCard> contentCards = setContentCardsByContents(contentDao.searchByTitle(title));
+		return contentCards;
+	}
+
+	@Override
+	public List<ContentCard> searchByFieldValues(String keyword) {
+		return setContentCardsByContents(fieldValueDao.search(keyword));
+	}
+
+	@Override
+	public List<ContentCard> search(String keyword) {
+		List<Content> contents = fieldValueDao.search(keyword);
+		contents.addAll(contentDao.searchByTitle(keyword));
+		List<ContentCard> contentCards = setContentCardsByContents(contents);
+		return contentCards;
 	}
 
 	@Override
@@ -53,22 +76,31 @@ public class ContentServiceImpl implements ContentService {
 			}
 		}
 
+		List<ContentCard> contentCards = setContentCardsByContents(contents);
+		return contentCards;
+	}
+
+	private List<ContentCard> setContentCardsByContents(List<Content> contents){
+		Map<Integer, Content> contentMap = new HashMap<>();
 		List<ContentCard> contentCards = new ArrayList<>();
 		for(Content content : contents){
-			ContentCard contentCard = new ContentCard();
-			contentCard.setUser(content.getUser());
-			contentCard.setTitle(content.getTitle());
-			contentCard.setContentTemplate(content.getContentTemplate());
-			contentCard.setCommunity(content.getContentTemplate().getCommunity());
-			Map<Integer, String> fieldValues = new HashMap<>();
-			Map<Integer, String> fieldNames = new HashMap<>();
-			for(FieldValue fieldValue : fieldValueService.getFieldValuesByContent(content)){
-				fieldValues.put(fieldValue.getField().getId(), fieldValue.getValue());
-				fieldNames.put(fieldValue.getField().getId(), fieldValue.getField().getName());
+			if(!contentMap.containsKey(content.getId())) {
+				contentMap.put(content.getId(), content);
+				ContentCard contentCard = new ContentCard();
+				contentCard.setUser(content.getUser());
+				contentCard.setTitle(content.getTitle());
+				contentCard.setContentTemplate(content.getContentTemplate());
+				contentCard.setCommunity(content.getContentTemplate().getCommunity());
+				Map<Integer, String> fieldValues = new HashMap<>();
+				Map<Integer, String> fieldNames = new HashMap<>();
+				for (FieldValue fieldValue : fieldValueService.getFieldValuesByContent(content)) {
+					fieldValues.put(fieldValue.getField().getId(), fieldValue.getValue());
+					fieldNames.put(fieldValue.getField().getId(), fieldValue.getField().getName());
+				}
+				contentCard.setFieldValues(fieldValues);
+				contentCard.setFieldNames(fieldNames);
+				contentCards.add(contentCard);
 			}
-			contentCard.setFieldValues(fieldValues);
-			contentCard.setFieldNames(fieldNames);
-			contentCards.add(contentCard);
 		}
 		return contentCards;
 	}

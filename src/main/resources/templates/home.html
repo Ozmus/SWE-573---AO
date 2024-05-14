@@ -39,6 +39,10 @@
 <div class="container">
     <a th:href="@{/content/selectCommunity}" class="btn btn-primary mb-4">Post</a>
     <h2>Contents</h2>
+    <form th:action="@{/searchContentSubmit}" method="post" class="mb-3">
+        <input type="text" name="keyword" placeholder="Search by title">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
     <ul class="list-group">
         <li th:each="contentCard : ${contentCards}" class="list-group-item">
             <strong th:text="${contentCard.title}"></strong> - by <span th:text="${contentCard.user.userName}"></span>

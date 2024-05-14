@@ -9,5 +9,5 @@ public interface ContentDao {
     Content findByContentId(int id);
     List<Content> findByContentTemplateId(ContentTemplate contentTemplateId);
     Content save(Content theContent);
-
+    List<Content> searchByTitle(String title);
 }
