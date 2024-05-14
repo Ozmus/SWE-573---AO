@@ -3,6 +3,7 @@ package com.example.communityapplication.controller;
 
 import com.example.communityapplication.enums.Role;
 import com.example.communityapplication.model.Community;
+import com.example.communityapplication.model.ContentCard;
 import com.example.communityapplication.model.User;
 import com.example.communityapplication.model.UserRole;
 import com.example.communityapplication.model.embedded.keys.UserRolesId;
@@ -18,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -48,6 +50,7 @@ public class CommunityController {
 		theModel.addAttribute("communities", communities);
 		return "community/community-page";
 	}
+
 	@GetMapping("/details")
 	public String showCommunityDetails(@RequestParam("name") String name, Model theModel, HttpSession session) {
 		Community community = communityService.getByCommunityName(name);
@@ -100,6 +103,20 @@ public class CommunityController {
 
         logger.info("Successfully created community: " + communityName);
 
-        return "community/community-page";
+        return this.showCommunityPage(theModel);
+	}
+
+	@PostMapping("/searchCommunitySubmit")
+	public String searchContent(@RequestParam("keyword") String keyword,
+								HttpSession session,
+								Model theModel) {
+		try {
+			List<Community> communities = communityService.searchCommunities(keyword);
+			theModel.addAttribute("communities", communities);
+		}
+		catch (Exception e){
+			theModel.addAttribute("communities", new ArrayList<ContentCard>());
+		}
+		return "community/community-page";
 	}
 }

@@ -59,7 +59,10 @@
     <div th:replace="navbar.html"></div>
 
     <a th:href="@{/community/create}" class="btn btn-primary mb-4">Create Community</a>
-
+    <form th:action="@{/community/searchCommunitySubmit}" method="post" class="mb-3">
+        <input type="text" name="keyword" placeholder="Search by title">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
     <a th:each="community : ${communities}"
        th:href="@{/community/details(name=${community.name})}" class="text-decoration-none">
         <div class="card clickable">
