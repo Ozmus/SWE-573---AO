@@ -24,7 +24,7 @@ class ContentServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        testContentTemplate = new ContentTemplate("ctName", new Community("Community 1", "Description 1", "Image URL 1", false));
+        testContentTemplate = new ContentTemplate("ctName", new Community("Community 1", "Description 1", false));
     }
 
     @Test

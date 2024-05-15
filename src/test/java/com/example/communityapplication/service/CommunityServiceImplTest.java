@@ -43,7 +43,7 @@ class CommunityServiceImplTest {
     void testGetByCommunityId() {
         // Arrange
         int communityId = 1;
-        Community expectedCommunity = new Community("Community1", "Description", "Image URL", false);
+        Community expectedCommunity = new Community("Community1", "Description", false);
         expectedCommunity.setId(communityId);
         when(communityDao.findByCommunityId(communityId)).thenReturn(expectedCommunity);
 
@@ -59,7 +59,7 @@ class CommunityServiceImplTest {
     void testGetByCommunityName() {
         // Arrange
         String communityName = "Community1";
-        Community expectedCommunity = new Community(communityName, "Description", "Image URL", false);
+        Community expectedCommunity = new Community(communityName, "Description",  false);
         when(communityDao.findByCommunityName(communityName)).thenReturn(expectedCommunity);
 
         // Act
@@ -74,8 +74,8 @@ class CommunityServiceImplTest {
     void testGetAllCommunities() {
         // Arrange
         List<Community> expectedCommunities = new ArrayList<>();
-        expectedCommunities.add(new Community("Community1", "Description1", "Image URL1", false));
-        expectedCommunities.add(new Community("Community2", "Description2", "Image URL2", false));
+        expectedCommunities.add(new Community("Community1", "Description1",  false));
+        expectedCommunities.add(new Community("Community2", "Description2",  false));
         when(communityDao.findAllCommunities()).thenReturn(expectedCommunities);
 
         // Act
@@ -95,7 +95,7 @@ class CommunityServiceImplTest {
         List<UserRole> userRoles = new ArrayList<>();
         userRoles.add(new UserRole(new UserRolesId(user.getId(), 1), Role.MEMBER));
 
-        Community community1 = new Community("Community1", "Description1", "Image URL1", false);
+        Community community1 = new Community("Community1", "Description1", false);
         community1.setId(1);
 
         List<Community> expectedCommunities = List.of(community1);
@@ -123,10 +123,10 @@ class CommunityServiceImplTest {
 
         List<UserRole> userRoles = List.of(modRole, ownerRole);
 
-        Community modCommunity = new Community("Community1", "Description1", "Image URL1", false);
+        Community modCommunity = new Community("Community1", "Description1", false);
         modCommunity.setId(1);
 
-        Community ownerCommunity = new Community("Community2", "Description2", "Image URL2", false);
+        Community ownerCommunity = new Community("Community2", "Description2", false);
         ownerCommunity.setId(2);
 
         List<Community> expectedCommunities = List.of(modCommunity, ownerCommunity);
@@ -149,7 +149,7 @@ class CommunityServiceImplTest {
     void testCreateCommunity() {
         // Arrange
         User currentUser = mock(User.class);
-        Community community = new Community("Community1", "Description", "Image URL", false);
+        Community community = new Community("Community1", "Description", false);
         ContentTemplate contentTemplate = new ContentTemplate("Default", community);
 
         community.setId(1);
@@ -170,7 +170,7 @@ class CommunityServiceImplTest {
     void testIsExist_ExistingCommunity() {
         // Arrange
         String communityName = "Community1";
-        Community existingCommunity = new Community(communityName, "Description", "Image URL", false);
+        Community existingCommunity = new Community(communityName, "Description", false);
         when(communityDao.findByCommunityName(communityName)).thenReturn(existingCommunity);
 
         // Act

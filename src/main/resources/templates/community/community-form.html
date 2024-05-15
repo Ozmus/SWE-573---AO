@@ -29,7 +29,7 @@
                     <!-- Create Community Form -->
                     <form action="#" th:action="@{/community/processCreateCommunityForm}"
                           th:object="${newCommunity}"
-                          method="POST" class="form-horizontal">
+                          method="POST" class="form-horizontal" enctype="multipart/form-data">
 
                         <!-- Place for messages: error, alert etc ... -->
                         <div class="form-group">
@@ -76,16 +76,16 @@
 
                         <!-- Image -->
                         <div style="margin-bottom: 25px" class="input-group">
-                            <label for="imageInput" class="form-label">Image (*)</label>
-                            <input type="file" id="imageInput" th:field="*{image_url}" class="form-control" accept="image/*" />
+                            <label for="imageFile">Upload Image:</label>
+                            <input type="file" th:field="*{image}" id="imageFile" class="form-control" />
                         </div>
 
-                        <div th:if="${#fields.hasErrors('image_url')}" style="margin-bottom: 25px" class="text-danger">
+                        <div th:if="${#fields.hasErrors('image')}"
+                             style="margin-bottom: 25px" class="text-danger">
                             <ul>
-                                <li th:each="err : ${#fields.errors('image_url')}" th:text="'Image ' + ${err}" />
+                                <li th:each="err : ${#fields.errors('image')}" th:text="'Image ' + ${err}" />
                             </ul>
                         </div>
-
 
                         <!-- Create Button -->
                         <div style="margin-top: 10px" class="form-group">

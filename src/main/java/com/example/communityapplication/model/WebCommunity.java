@@ -1,50 +1,27 @@
 package com.example.communityapplication.model;
 
 import jakarta.persistence.*;
+import org.springframework.web.multipart.MultipartFile;
 
-@Entity
-@Table(name = "communities")
-public class Community {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
-    @Column(name = "name")
+public class WebCommunity {
     private String name;
-
-    @Column(name = "description")
     private String description;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id")
-    private Image image;
-
-    @Column(name = "is_archived")
+    private MultipartFile image;
     private boolean is_archived;
 
-    public Community() {
+    public WebCommunity() {
 
     }
 
-    public Community(String name, String description, boolean is_archived) {
+    public WebCommunity(String name, String description, boolean is_archived) {
         this.name = name;
         this.description = description;
         this.is_archived = is_archived;
     }
 
-    public Community(String name, String description) {
+    public WebCommunity(String name, String description) {
         this.name = name;
         this.description = description;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {
@@ -63,11 +40,11 @@ public class Community {
         this.description = description;
     }
 
-    public Image getImage() {
+    public MultipartFile getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(MultipartFile image) {
         this.image = image;
     }
 

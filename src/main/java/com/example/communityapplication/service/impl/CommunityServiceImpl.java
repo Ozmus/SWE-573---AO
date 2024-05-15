@@ -3,6 +3,7 @@ package com.example.communityapplication.service.impl;
 import com.example.communityapplication.dao.CommunityDao;
 import com.example.communityapplication.dao.ContentTemplateDao;
 import com.example.communityapplication.dao.FieldDao;
+import com.example.communityapplication.dao.ImageDao;
 import com.example.communityapplication.enums.DataType;
 import com.example.communityapplication.enums.Role;
 import com.example.communityapplication.model.*;
@@ -23,14 +24,19 @@ public class CommunityServiceImpl implements CommunityService {
 	private UserRoleService userRoleService;
 	private ContentTemplateDao contentTemplateDao;
 	private FieldDao fieldDao;
-
+	private ImageDao imageDao;
 
 	@Autowired
-	public CommunityServiceImpl(CommunityDao communityDao, UserRoleService userRoleService, ContentTemplateDao contentTemplateDao, FieldDao fieldDao) {
+	public CommunityServiceImpl(CommunityDao communityDao,
+								UserRoleService userRoleService,
+								ContentTemplateDao contentTemplateDao,
+								FieldDao fieldDao,
+								ImageDao imageDao) {
 		this.communityDao = communityDao;
 		this.userRoleService = userRoleService;
 		this.contentTemplateDao = contentTemplateDao;
 		this.fieldDao = fieldDao;
+		this.imageDao = imageDao;
 	}
 
 	@Override

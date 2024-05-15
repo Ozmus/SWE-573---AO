@@ -2,6 +2,7 @@ package com.example.communityapplication.controller;
 
 import com.example.communityapplication.model.Community;
 import com.example.communityapplication.model.User;
+import com.example.communityapplication.model.WebCommunity;
 import com.example.communityapplication.service.CommunityService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,8 +42,8 @@ class CommunityControllerTest {
     void testShowCommunityPage() {
         // Arrange
         List<Community> communities = new ArrayList<>();
-        Community community1 = new Community("Community 1", "Description 1", "Image URL 1", false);
-        Community community2 = new Community("Community 2", "Description 2", "Image URL 2", false);
+        Community community1 = new Community("Community 1", "Description 1",  false);
+        Community community2 = new Community("Community 2", "Description 2",  false);
         communities.add(community1);
         communities.add(community2);
         when(communityService.getAllCommunities()).thenReturn(communities);
@@ -59,7 +60,7 @@ class CommunityControllerTest {
     void testShowCommunityDetails() {
         // Arrange
         String communityName = "Community 1";
-        Community community = new Community(communityName, "Description 1", "Image URL 1", false);
+        Community community = new Community(communityName, "Description 1", false);
         when(communityService.getByCommunityName(communityName)).thenReturn(community);
 
         // Act
@@ -83,7 +84,7 @@ class CommunityControllerTest {
     @Test
     void testProcessCreateCommunityForm_WithErrors() {
         // Arrange
-        Community community = new Community("Community 1", "", "", false);
+        WebCommunity community = new WebCommunity("Community 1", "",  false);
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(true);
 
@@ -98,7 +99,7 @@ class CommunityControllerTest {
     @Test
     void testProcessCreateCommunityForm_ExistingCommunity() {
         // Arrange
-        Community community = new Community("Community 1", "Description 1", "Image URL 1", false);
+        WebCommunity community = new WebCommunity("Community 1", "Description 1", false);
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(false);
         when(communityService.isExist(community.getName())).thenReturn(true);
@@ -117,7 +118,8 @@ class CommunityControllerTest {
     @Test
     void testProcessCreateCommunityForm_Success() {
         // Arrange
-        Community community = new Community("Community 1", "Description 1", "Image URL 1", false);
+        WebCommunity community = new WebCommunity("Community 1", "Description 1", false);
+        Community savedCommunity = new Community("Community 1", "Description 1", false);
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(false);
         when(communityService.isExist(community.getName())).thenReturn(false);
@@ -128,7 +130,7 @@ class CommunityControllerTest {
         // Assert
         assertEquals("community/community-page", viewName);
         verify(communityService).isExist(community.getName());
-        verify(communityService).createCommunity(community, null);
+        verify(communityService).createCommunity(savedCommunity, null);
         verifyNoMoreInteractions(communityService, model);
     }
 

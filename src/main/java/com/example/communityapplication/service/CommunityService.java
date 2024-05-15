@@ -1,6 +1,7 @@
 package com.example.communityapplication.service;
 
 import com.example.communityapplication.model.Community;
+import com.example.communityapplication.model.Image;
 import com.example.communityapplication.model.User;
 
 import java.util.List;
