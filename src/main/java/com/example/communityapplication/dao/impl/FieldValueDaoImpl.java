@@ -5,6 +5,7 @@ import com.example.communityapplication.dao.FieldValueDao;
 import com.example.communityapplication.model.Content;
 import com.example.communityapplication.model.Field;
 import com.example.communityapplication.model.FieldValue;
+import com.example.communityapplication.model.embedded.keys.FieldValueId;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,17 @@ public class FieldValueDaoImpl implements FieldValueDao {
 	}
 
 	@Override
-	public FieldValue findByFieldValueId(long id) {
-		return null;
-	}
+	public FieldValue findByFieldAndContentId(int fieldId, int contentId) {
+		TypedQuery<FieldValue> theQuery = entityManager.createQuery("from FieldValue  where id =:fvId", FieldValue.class);
+		theQuery.setParameter("fvId", new FieldValueId(fieldId, contentId));
+
+		FieldValue theFieldValue = null;
+		try {
+			theFieldValue = theQuery.getSingleResult();
+		} catch (Exception e) {
+			theFieldValue = null;
+		}
+		return theFieldValue;	}
 
 	@Override
 	public List<FieldValue> findByContentId(Content content) {

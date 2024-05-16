@@ -1,5 +1,7 @@
 package com.example.communityapplication.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +10,7 @@ public class ContentForm {
     private Map<Integer, String> fieldValues = new HashMap<>();
     private Map<Integer, String> fieldValuesForGeolocationLongitude = new HashMap<>();
     private Map<Integer, String> fieldValuesForGeolocationLatitude = new HashMap<>();
-
+    private Map<Integer, MultipartFile> fieldValuesForImage = new HashMap<>();
 
     private ContentTemplate contentTemplate;
     private String title;
@@ -89,5 +91,23 @@ public class ContentForm {
     // Helper method to get a specific field value
     public String getFieldValueForGeolocationLongitude(int fieldId) {
         return fieldValuesForGeolocationLongitude.get(fieldId);
+    }
+
+    public Map<Integer, MultipartFile> getFieldValuesForImage() {
+        return fieldValuesForImage;
+    }
+
+    public void setFieldValuesForImage(Map<Integer, MultipartFile> fieldValuesForImage) {
+        this.fieldValuesForImage = fieldValuesForImage;
+    }
+
+    // Helper method to set a specific field value
+    public void setFieldValueForImage(int fieldId, MultipartFile value) {
+        fieldValuesForImage.put(fieldId, value);
+    }
+
+    // Helper method to get a specific field value
+    public MultipartFile getFieldValueForImage(int fieldId) {
+        return fieldValuesForImage.get(fieldId);
     }
 }

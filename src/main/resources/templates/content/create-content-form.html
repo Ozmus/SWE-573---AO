@@ -14,7 +14,7 @@
     <div class="container">
         <h2>Create Content</h2>
         <form action="#" th:action="@{/content/createContentSubmit(contentTemplateId=${contentTemplate.id})}"
-              th:object="${contentForm}" method="POST" class="form-horizontal">
+              th:object="${contentForm}" method="POST" class="form-horizontal" enctype="multipart/form-data">
 
             <label th:text="Title"></label>
             <input type="text" class="form-control" th:field="*{title}"/>
@@ -40,7 +40,10 @@
                                pattern="[0-9]*[.,]?[0-9]*">
                     </div>
                     <div th:if="${field.dataType.toString()} == 'IMAGE'">
-
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <label for="imageFile">Upload Image:</label>
+                            <input type="file" th:field="*{fieldValuesForImage[__${field.id}__]}" id="imageFile" class="form-control" />
+                        </div>
                     </div>
                     <div th:if="${field.dataType.toString()} == 'TEXT'">
                         <label th:text="${field.name}"></label>

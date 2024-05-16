@@ -20,26 +20,19 @@ public class ImageDaoImpl implements ImageDao {
     }
 
     @Override
-    public Image findById(Long id) {
+    public Image findById(int id) {
         return entityManager.find(Image.class, id);
     }
 
     @Override
     @Transactional
-    public void save(Image imageEntity) {
-        entityManager.merge(imageEntity);
+    public Image save(Image imageEntity) {
+        return entityManager.merge(imageEntity);
     }
 
     @Override
     public List<Image> findAll() {
         TypedQuery<Image> query = entityManager.createQuery("SELECT i FROM Image i", Image.class);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Image> search(String keyword) {
-        TypedQuery<Image> query = entityManager.createQuery("SELECT i FROM Image i WHERE i.name LIKE :keyword", Image.class);
-        query.setParameter("keyword", "%" + keyword + "%");
         return query.getResultList();
     }
 }
