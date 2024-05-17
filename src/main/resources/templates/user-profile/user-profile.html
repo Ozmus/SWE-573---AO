@@ -37,12 +37,16 @@
 <div th:replace="navbar.html"></div>
 <br>
 <div class="container">
-    <a th:href="@{/content/selectCommunity}" class="btn btn-primary mb-4">Post</a>
-    <h2>Contents</h2>
-    <form th:action="@{/searchContentSubmit}" method="post" class="mb-3">
-        <input type="text" name="keyword" placeholder="Search by title">
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
+    <h1><strong th:text="${currentUser.userName}"></strong></h1><br>
+    <img th:src="@{/profile/image/{userName}(userName=${currentUser.userName})}" class="card-img-top" alt="Profile Image"><br>
+    <label>First Name: </label>
+    <strong th:text="${currentUser.firstName}"></strong><br>
+    <label>Last Name: </label>
+    <strong th:text="${currentUser.lastName}"></strong><br>
+    <label>Email: </label>
+    <strong th:text="${currentUser.email}"></strong><br>
+
+    <h2>Posted Contents</h2>
     <ul class="list-group">
         <li th:each="contentCard : ${contentCards}" class="list-group-item">
             <strong th:text="${contentCard.title}"></strong> - by <span th:text="${contentCard.user.userName}"></span>
@@ -61,9 +65,6 @@
             </div>
         </li>
     </ul>
-    <form action="#" th:action="@{/logout}" method="POST">
-        <input type="submit" value="Logout" class="btn btn-outline-primary logout-btn" />
-    </form>
 </div>
 
 <!-- Bootstrap JavaScript -->
