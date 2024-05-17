@@ -21,10 +21,12 @@
             padding: 20px;
         }
 
-        .page-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 30px;
+        .fixed-size-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
         }
 
         .logout-btn {
@@ -40,7 +42,7 @@
     <a th:each="community : ${communities}"
        th:href="@{/content/selectContentTemplate(name=${community.name})}" class="text-decoration-none">
         <div class="card clickable">
-            <img th:src="@{/community/image/{communityId}(communityId=${community.id})}" class="card-img-top" alt="Community Image">
+            <img th:src="@{/community/image/{communityId}(communityId=${community.id})}" class="card-img-top fixed-size-img" alt="Community Image">
             <div class="card-body">
                 <h5 class="card-title" th:text="${community.name}"></h5>
             </div>

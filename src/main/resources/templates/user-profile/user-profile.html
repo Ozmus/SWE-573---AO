@@ -21,15 +21,13 @@
             padding: 20px;
         }
 
-        .page-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-
-        .logout-btn {
-            margin-top: 20px;
-        }
+         .fixed-size-img {
+             width: 200px;
+             height: 200px;
+             object-fit: cover;
+             border-top-left-radius: 15px;
+             border-top-right-radius: 15px;
+         }
     </style>
 </head>
 
@@ -37,8 +35,9 @@
 <div th:replace="navbar.html"></div>
 <br>
 <div class="container">
+    <a th:href="@{/profile/editProfile}" class="btn btn-primary mb-4">Edit</a>
     <h1><strong th:text="${currentUser.userName}"></strong></h1><br>
-    <img th:src="@{/profile/image/{userName}(userName=${currentUser.userName})}" class="card-img-top" alt="Profile Image"><br>
+    <img th:src="@{/profile/image/{userName}(userName=${currentUser.userName})}" class="card-img-top fixed-size-img" alt="Profile Image">
     <label>First Name: </label>
     <strong th:text="${currentUser.firstName}"></strong><br>
     <label>Last Name: </label>
@@ -56,7 +55,7 @@
                     <span th:each="entry : ${contentCard.fieldValues}">
                         <strong th:text="${contentCard.getField(entry.key).name} + ': '"></strong>
                         <div th:if="${contentCard.getField(entry.key).dataType.toString()} == 'IMAGE'">
-                            <img th:src="@{/image/{fieldId}/{contentId}(fieldId=${contentCard.getField(entry.key).id}, contentId=${contentCard.getContent().id})}" class="card-img-top" alt="Content Image">
+                            <img th:src="@{/image/{fieldId}/{contentId}(fieldId=${contentCard.getField(entry.key).id}, contentId=${contentCard.getContent().id})}" class="card-img-top fixed-size-img" alt="Content Image">
                         </div>
                         <div th:if="${contentCard.getField(entry.key).dataType.toString()} != 'IMAGE'">
                             <span th:text="${entry.value}"></span>

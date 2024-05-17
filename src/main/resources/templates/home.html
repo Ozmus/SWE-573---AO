@@ -21,10 +21,12 @@
             padding: 20px;
         }
 
-        .page-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 30px;
+        .fixed-size-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
         }
 
         .logout-btn {
@@ -52,7 +54,7 @@
                     <span th:each="entry : ${contentCard.fieldValues}">
                         <strong th:text="${contentCard.getField(entry.key).name} + ': '"></strong>
                         <div th:if="${contentCard.getField(entry.key).dataType.toString()} == 'IMAGE'">
-                            <img th:src="@{/image/{fieldId}/{contentId}(fieldId=${contentCard.getField(entry.key).id}, contentId=${contentCard.getContent().id})}" class="card-img-top" alt="Content Image">
+                            <img th:src="@{/image/{fieldId}/{contentId}(fieldId=${contentCard.getField(entry.key).id}, contentId=${contentCard.getContent().id})}" class="card-img-top fixed-size-img" alt="Content Image">
                         </div>
                         <div th:if="${contentCard.getField(entry.key).dataType.toString()} != 'IMAGE'">
                             <span th:text="${entry.value}"></span>

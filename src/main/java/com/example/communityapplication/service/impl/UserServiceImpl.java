@@ -1,9 +1,11 @@
 package com.example.communityapplication.service.impl;
 
 import com.example.communityapplication.enums.Role;
+import com.example.communityapplication.model.Image;
 import com.example.communityapplication.model.User;
 import com.example.communityapplication.dao.UserDao;
 import com.example.communityapplication.model.UserRole;
+import com.example.communityapplication.model.WebUserEdit;
 import com.example.communityapplication.model.embedded.keys.UserRolesId;
 import com.example.communityapplication.service.UserRoleService;
 import com.example.communityapplication.service.UserService;
@@ -14,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +79,42 @@ public class UserServiceImpl implements UserService {
 
 		// save user in the database
 		userDao.save(user);
+	}
+
+	@Override
+	public User save(WebUserEdit webUserEdit, User user) {
+		if (webUserEdit.getUserName() != null){
+			user.setUserName(webUserEdit.getUserName());
+		}
+		if (webUserEdit.getFirstName() != null){
+			user.setFirstName(webUserEdit.getFirstName());
+		}
+		if (webUserEdit.getLastName() != null){
+			user.setLastName(webUserEdit.getLastName());
+		}
+		if (webUserEdit.getEmail() != null){
+			user.setEmail(webUserEdit.getEmail());
+		}
+		if (webUserEdit.getPassword() != null){
+			user.setPassword(passwordEncoder.encode(webUserEdit.getPassword()));
+		}
+		if (!webUserEdit.getImage().isEmpty()){
+			try {
+				// Convert image file data to byte array
+				byte[] imageData = webUserEdit.getImage().getBytes();
+
+				// Create Image object and set image data
+				Image image = new Image();
+				image.setImageData(imageData);
+
+				// Set Image object in Community
+				user.setImage(image);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return userDao.save(user);
 	}
 
 	@Override
