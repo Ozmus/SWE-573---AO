@@ -37,6 +37,7 @@
 <div th:replace="navbar.html"></div>
 <br>
 <div class="container">
+    <a th:href="@{/profile/editProfile}" class="btn btn-primary mb-4">Edit</a>
     <h1><strong th:text="${currentUser.userName}"></strong></h1><br>
     <img th:src="@{/profile/image/{userName}(userName=${currentUser.userName})}" class="card-img-top" alt="Profile Image"><br>
     <label>First Name: </label>

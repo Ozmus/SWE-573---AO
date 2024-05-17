@@ -3,14 +3,18 @@ package com.example.communityapplication.controller;
 import com.example.communityapplication.model.Community;
 import com.example.communityapplication.model.ContentCard;
 import com.example.communityapplication.model.User;
+import com.example.communityapplication.model.WebUserEdit;
 import com.example.communityapplication.service.*;
+import com.example.communityapplication.user.WebUser;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,5 +76,33 @@ public class UserProfileController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/editProfile")
+    public String showEditProfilePage(Model theModel) {
+
+        theModel.addAttribute("webUserEdit", new WebUserEdit());
+
+        return "user-profile/user-profile-edit";
+    }
+
+    @PostMapping("/processEditProfile")
+    public String processEditProfile(
+            @Valid @ModelAttribute("webUserEdit") WebUserEdit theWebUserEdit,
+            BindingResult theBindingResult,
+            HttpSession session, Model theModel) {
+
+        User user = (User) session.getAttribute("user");
+
+        // form validation
+        if (theBindingResult.hasErrors()){
+            return "user-profile/user-profile-edit";
+        }
+
+        user = userService.save(theWebUserEdit, user);
+
+        session.setAttribute("user", user);
+
+        return this.showProfile(session, theModel);
     }
 }
