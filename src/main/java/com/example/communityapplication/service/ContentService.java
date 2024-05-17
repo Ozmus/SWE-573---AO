@@ -11,4 +11,5 @@ public interface ContentService {
     List<ContentCard> searchByFieldValues(String keyword);
     List<ContentCard> search(String keyword);
     List<ContentCard> getContentCardsByUser(User user);
+    List<ContentCard> getContentCardsPostedByUser(User user);
 }

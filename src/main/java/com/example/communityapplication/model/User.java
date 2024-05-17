@@ -28,6 +28,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id")
+    private Image image;
+
     public User() {
     }
 
@@ -82,6 +86,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     @Override

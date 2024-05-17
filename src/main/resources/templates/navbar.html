@@ -35,7 +35,7 @@
                 <a class="nav-link" th:classappend="${currentPage == 'management' ? 'active' : ''}" th:href="@{/management/selectCommunity}">Management</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:classappend="${currentPage == 'profile' ? 'active' : ''}" href="#profile">Profile</a>
+                <a class="nav-link" th:classappend="${currentPage == 'profile' ? 'active' : ''}" th:href="@{/profile}">Profile</a>
             </li>
         </ul>
     </div>

@@ -5,6 +5,7 @@ import com.example.communityapplication.dao.ContentDao;
 import com.example.communityapplication.model.Community;
 import com.example.communityapplication.model.Content;
 import com.example.communityapplication.model.ContentTemplate;
+import com.example.communityapplication.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,20 @@ public class ContentDaoImpl implements ContentDao {
 	public List<Content> findByContentTemplateId(ContentTemplate contentTemplate) {
 		TypedQuery<Content> theQuery = entityManager.createQuery("from Content  where contentTemplate =:ctContentTemplate", Content.class);
 		theQuery.setParameter("ctContentTemplate", contentTemplate);
+
+		List<Content> theContents = null;
+		try {
+			theContents = theQuery.getResultList();
+		} catch (Exception e) {
+			theContents = null;
+		}
+		return theContents;
+	}
+
+	@Override
+	public List<Content> findByUser(User user) {
+		TypedQuery<Content> theQuery = entityManager.createQuery("from Content  where user =:ctUser", Content.class);
+		theQuery.setParameter("ctUser", user);
 
 		List<Content> theContents = null;
 		try {

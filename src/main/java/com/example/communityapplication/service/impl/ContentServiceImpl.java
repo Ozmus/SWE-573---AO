@@ -80,6 +80,13 @@ public class ContentServiceImpl implements ContentService {
 		return contentCards;
 	}
 
+	@Override
+	public List<ContentCard> getContentCardsPostedByUser(User user) {
+		List<Content> contents = contentDao.findByUser(user);
+		List<ContentCard> contentCards = setContentCardsByContents(contents);
+		return contentCards;
+	}
+
 	private List<ContentCard> setContentCardsByContents(List<Content> contents){
 		Map<Integer, Content> contentMap = new HashMap<>();
 		List<ContentCard> contentCards = new ArrayList<>();
