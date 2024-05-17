@@ -91,14 +91,15 @@ public class ContentServiceImpl implements ContentService {
 				contentCard.setTitle(content.getTitle());
 				contentCard.setContentTemplate(content.getContentTemplate());
 				contentCard.setCommunity(content.getContentTemplate().getCommunity());
+				contentCard.setContent(content);
 				Map<Integer, String> fieldValues = new HashMap<>();
-				Map<Integer, String> fieldNames = new HashMap<>();
+				Map<Integer, Field> fields = new HashMap<>();
 				for (FieldValue fieldValue : fieldValueService.getFieldValuesByContent(content)) {
 					fieldValues.put(fieldValue.getField().getId(), fieldValue.getValue());
-					fieldNames.put(fieldValue.getField().getId(), fieldValue.getField().getName());
+					fields.put(fieldValue.getField().getId(), fieldValue.getField());
 				}
 				contentCard.setFieldValues(fieldValues);
-				contentCard.setFieldNames(fieldNames);
+				contentCard.setFields(fields);
 				contentCards.add(contentCard);
 			}
 		}

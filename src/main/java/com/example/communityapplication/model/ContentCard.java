@@ -6,12 +6,13 @@ import java.util.Map;
 public class ContentCard {
     // A map to hold dynamic field values
     private Map<Integer, String> fieldValues = new HashMap<>();
-    private Map<Integer, String> fieldNames = new HashMap<>();
+    private Map<Integer, Field> fieldNames = new HashMap<>();
 
     private ContentTemplate contentTemplate;
     private String title;
     private User user;
     private Community community;
+    private Content content;
 
     // Constructors, getters, and setters
 
@@ -49,6 +50,14 @@ public class ContentCard {
         this.contentTemplate = contentTemplate;
     }
 
+    public Content getContent() {
+        return content;
+    }
+
+    public void setContent(Content content) {
+        this.content = content;
+    }
+
     public Map<Integer, String> getFieldValues() {
         return fieldValues;
     }
@@ -67,21 +76,21 @@ public class ContentCard {
         return fieldValues.get(fieldId);
     }
 
-    public Map<Integer, String> getFieldNames() {
+    public Map<Integer, Field> getFieldNames() {
         return fieldNames;
     }
 
-    public void setFieldNames(Map<Integer, String> fieldNames ) {
+    public void setFields(Map<Integer, Field> fieldNames ) {
         this.fieldNames = fieldNames;
     }
 
     // Helper method to set a specific field value
-    public void setFieldName(int fieldId, String name) {
-        fieldNames.put(fieldId, name);
+    public void setField(int fieldId, Field field) {
+        fieldNames.put(fieldId, field);
     }
 
     // Helper method to get a specific field value
-    public String getFieldName(int fieldId) {
+    public Field getField(int fieldId) {
         return fieldNames.get(fieldId);
     }
 }

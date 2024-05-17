@@ -15,17 +15,21 @@ CREATE TABLE `users` (
                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-
-
+DROP TABLE IF EXISTS `images`;
+CREATE TABLE images (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        image_data LONGBLOB
+);
 
 DROP TABLE IF EXISTS `communities`;
 CREATE TABLE `communities` (
                         `id` int NOT NULL AUTO_INCREMENT,
                         `name` varchar(50) NOT NULL,
                         `description` varchar(2500) NOT NULL,
-                        `image_url` varchar(100) NOT NULL,
+                        `image_id` int NOT NULL,
                         `is_archived` boolean NOT NULL DEFAULT false,
-                        PRIMARY KEY (`id`)
+                        PRIMARY KEY (`id`),
+                        FOREIGN KEY (image_id) REFERENCES images(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 

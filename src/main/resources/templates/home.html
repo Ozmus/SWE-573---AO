@@ -50,8 +50,13 @@
             Community: <span th:text="${contentCard.community.name}"></span>
             <div>
                     <span th:each="entry : ${contentCard.fieldValues}">
-                        <strong th:text="${contentCard.getFieldName(entry.key)} + ': '"></strong>
-                        <span th:text="${entry.value}"></span>
+                        <strong th:text="${contentCard.getField(entry.key).name} + ': '"></strong>
+                        <div th:if="${contentCard.getField(entry.key).dataType.toString()} == 'IMAGE'">
+                            <img th:src="@{/image/{fieldId}/{contentId}(fieldId=${contentCard.getField(entry.key).id}, contentId=${contentCard.getContent().id})}" class="card-img-top" alt="Community Image">
+                        </div>
+                        <div th:if="${contentCard.getField(entry.key).dataType.toString()} != 'IMAGE'">
+                            <span th:text="${entry.value}"></span>
+                        </div>
                     </span>
             </div>
         </li>
