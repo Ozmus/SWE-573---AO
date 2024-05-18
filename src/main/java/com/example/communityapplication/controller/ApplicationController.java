@@ -2,12 +2,15 @@ package com.example.communityapplication.controller;
 
 import com.example.communityapplication.model.*;
 import com.example.communityapplication.service.*;
+import com.example.communityapplication.user.WebUser;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -67,13 +70,32 @@ public class ApplicationController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/advancedSearch")
+    public String showAdvancedSearch(HttpSession session,
+                                     Model theModel) {
+        theModel.addAttribute("advancedSearchFields", new AdvancedSearchFields());
+
+        return "/advanced-search";
+    }
+
+    @PostMapping("/processAdvancedSearch")
+    public String processAdvancedSearch(@Valid @ModelAttribute("advancedSearchFields") AdvancedSearchFields advancedSearchFields,
+                                          BindingResult theBindingResult,
+                                          HttpSession session,
+                                          Model theModel) {
+        // form validation
+        if (theBindingResult.hasErrors()){
+            return "advanced-search";
+        }
+
+        try {
+            List<ContentCard> contentCards = contentService.advancedSearch(advancedSearchFields);
+            theModel.addAttribute("contentCards", contentCards);
+        }
+        catch (Exception e){
+            theModel.addAttribute("contentCards", new ArrayList<ContentCard>());
+        }
+        return "home";
+    }
 }
-
-
-
-
-
-
-
-
-

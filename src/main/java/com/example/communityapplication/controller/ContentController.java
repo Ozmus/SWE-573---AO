@@ -70,7 +70,6 @@ public class ContentController {
 
     @GetMapping("/createContent")
     public String showCreateForm(@RequestParam("contentTemplateId") String contentTemplateId,
-                                 @ModelAttribute ContentForm contentForm,
                                  Model theModel,
                                  HttpSession session) {
         // Fetch content template and fields based on content template ID

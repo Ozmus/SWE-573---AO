@@ -10,6 +10,7 @@ public interface ContentTemplateDao {
     ContentTemplate findByNameAndCommunityId(String name, Community community);
     List<ContentTemplate> findByCommunityId(Community community);
     ContentTemplate findById(int id);
+    ContentTemplate findByName(String name);
     ContentTemplate save(ContentTemplate theContentTemplate);
     void delete(ContentTemplate theContentTemplate);
 }
