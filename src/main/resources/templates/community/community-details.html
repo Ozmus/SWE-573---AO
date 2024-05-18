@@ -58,7 +58,7 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div th:if="${community}">
-                    <img th:src="${community.image_url}" alt="Community Image" class="community-image">
+                    <img th:src="@{/community/image/{communityId}(communityId=${community.id})}" class="card-img-top fixed-size-img" alt="Community Image">
                     <h2 th:text="${community.name}" class="community-name"></h2>
                     <p th:text="${community.description}" class="community-description"></p>
                     <a th:href="@{/community}" class="btn btn-primary back-button">Back to Community</a>

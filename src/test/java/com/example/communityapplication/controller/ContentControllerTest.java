@@ -109,7 +109,7 @@ public class ContentControllerTest {
         when(fieldService.getFieldsByContentTemplateId(anyInt())).thenReturn(fields);
 
         // Call the method under test
-        String result = contentController.showCreateForm("1", new ContentForm(), model, session);
+        String result = contentController.showCreateForm("1", model, session);
 
         // Verify the method result
         assertEquals("content/create-content-form", result);

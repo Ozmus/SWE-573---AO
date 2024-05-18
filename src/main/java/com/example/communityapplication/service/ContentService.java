@@ -10,6 +10,7 @@ public interface ContentService {
     List<ContentCard> searchByTitle(String title);
     List<ContentCard> searchByFieldValues(String keyword);
     List<ContentCard> search(String keyword);
+    List<ContentCard> advancedSearch(AdvancedSearchFields advancedSearchFields);
     List<ContentCard> getContentCardsByUser(User user);
     List<ContentCard> getContentCardsPostedByUser(User user);
 }

@@ -45,6 +45,7 @@
         <input type="text" name="keyword" placeholder="Search by title">
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
+    <a th:href="@{/advancedSearch}" class="btn btn-primary mb-4">Advanced Search</a>
     <ul class="list-group">
         <li th:each="contentCard : ${contentCards}" class="list-group-item">
             <strong th:text="${contentCard.title}"></strong> - by <span th:text="${contentCard.user.userName}"></span>

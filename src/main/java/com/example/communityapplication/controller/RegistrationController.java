@@ -46,10 +46,10 @@ public class RegistrationController {
 	}
 
 	@PostMapping("/processRegistrationForm")
-	public String processRegistrationForm(
-			@Valid @ModelAttribute("webUser") WebUser theWebUser,
-			BindingResult theBindingResult,
-			HttpSession session, Model theModel) {
+	public String processRegistrationForm(@Valid @ModelAttribute("webUser") WebUser theWebUser,
+										  BindingResult theBindingResult,
+										  HttpSession session,
+										  Model theModel) {
 
 		String userName = theWebUser.getUserName();
 		logger.info("Processing registration form for: " + userName);

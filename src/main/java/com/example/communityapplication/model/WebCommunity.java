@@ -1,6 +1,5 @@
 package com.example.communityapplication.model;
 
-import jakarta.persistence.*;
 import org.springframework.web.multipart.MultipartFile;
 
 public class WebCommunity {

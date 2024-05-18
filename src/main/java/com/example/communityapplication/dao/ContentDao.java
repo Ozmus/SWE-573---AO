@@ -1,5 +1,6 @@
 package com.example.communityapplication.dao;
 
+import com.example.communityapplication.model.Community;
 import com.example.communityapplication.model.Content;
 import com.example.communityapplication.model.ContentTemplate;
 import com.example.communityapplication.model.User;

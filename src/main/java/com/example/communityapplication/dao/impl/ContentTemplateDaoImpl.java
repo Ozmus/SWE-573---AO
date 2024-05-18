@@ -40,6 +40,22 @@ public class ContentTemplateDaoImpl implements ContentTemplateDao {
 	}
 
 	@Override
+	public ContentTemplate findByName(String name) {
+		TypedQuery<ContentTemplate> theQuery = entityManager.createQuery("from ContentTemplate where name=:ctName", ContentTemplate.class);
+		theQuery.setParameter("ctName", name);
+
+
+		ContentTemplate theContentTemplate = null;
+		try {
+			theContentTemplate = theQuery.getSingleResult();
+		} catch (Exception e) {
+			theContentTemplate = null;
+		}
+
+		return theContentTemplate;
+	}
+
+	@Override
 	public ContentTemplate findByNameAndCommunityId(String name, Community community) {
 		TypedQuery<ContentTemplate> theQuery = entityManager.createQuery("from ContentTemplate where name=:ctName and community=:ctCommunity", ContentTemplate.class);
 		theQuery.setParameter("ctName", name);
