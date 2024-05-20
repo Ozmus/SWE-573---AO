@@ -92,6 +92,11 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
+	public void leaveCommunity(Community community, User currentUser) {
+		userRoleService.leaveCommunity(currentUser, community);
+	}
+
+	@Override
 	public boolean isExist(String name) {
 		Community existing = this.getByCommunityName(name);
 		return existing != null;
