@@ -2,6 +2,8 @@ package com.example.communityapplication.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "content_templates")
 public class ContentTemplate {
@@ -17,6 +19,9 @@ public class ContentTemplate {
     @ManyToOne
     @JoinColumn(name = "community_id", nullable = false)
     private Community community;
+
+    @OneToMany(mappedBy = "contentTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Content> contents;
 
     public ContentTemplate() {
     }

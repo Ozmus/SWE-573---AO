@@ -166,9 +166,14 @@ public class ManagementController {
             return "/management/content-template-operation/new-content-template-form";
         }
         ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
+        if(newContentTemplate.getName() == null){
+            if(contentTemplate.getName().equals("")){
+                contentTemplateService.deleteContentTemplateById(contentTemplate.getId());
+            }
+            return this.showCreateContentTemplateForm(contentTemplate.getCommunity().getName(), null, theModel);
+        }
         contentTemplate.setName(newContentTemplate.getName());
         contentTemplateService.save(contentTemplate);
-
         return this.showContentTemplate(contentTemplate.getCommunity().getName(), theModel, session);
     }
 
@@ -210,7 +215,26 @@ public class ManagementController {
         if (theBindingResult.hasErrors()){
             return "/management/content-template-operation/new-content-template-form";
         }
+        /*ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
+        if(newContentTemplate.getName() == null){
+            if(contentTemplate.getName().equals("")){
+                contentTemplateService.deleteContentTemplateById(contentTemplate.getId());
+            }
+            return this.showCreateContentTemplateForm(contentTemplate.getCommunity().getName(), null, theModel);
+        }
+        else{
+            contentTemplate.setName(newContentTemplate.getName());
+            contentTemplateService.save(contentTemplate);
+            return this.showContentTemplate(contentTemplate.getCommunity().getName(), theModel, session);
+        }*/
+
         Field field = fieldService.getFieldById(Integer.parseInt(fieldId));
+        if(newField.getName() == null){
+            if(field.getName().equals("")){
+                fieldService.delete(field.getId());
+            }
+            return this.showCreateFieldForm(contentTemplateId, null, theModel);
+        }
         ContentTemplate contentTemplate = contentTemplateService.getById(Integer.parseInt(contentTemplateId));
         field.setName(newField.getName());
         field.setDataType(newField.getDataType());

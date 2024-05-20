@@ -131,7 +131,7 @@ public class ContentControllerTest {
         when(contentService.saveContent(any(ContentForm.class), eq(testUser))).thenReturn(content);
 
         // Call method
-        String result = contentController.createContentSubmit("1", contentForm, session);
+        String result = contentController.createContentSubmit("1", contentForm, session, model);
 
         // Verify the results
         assertEquals("home", result);

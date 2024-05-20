@@ -87,13 +87,20 @@ public class ContentController {
     @PostMapping("/createContentSubmit")
     public String createContentSubmit(@RequestParam("contentTemplateId") String contentTemplateId,
                                       @ModelAttribute("contentForm") ContentForm contentForm,
-                                      HttpSession session) {
+                                      HttpSession session,
+                                      Model theModel) {
         User user = (User) session.getAttribute("user");
         contentForm.setContentTemplate(contentTemplateService.getById(Integer.parseInt(contentTemplateId)));
 
         // Save the content and field values
-        Content content = contentService.saveContent(contentForm, user);
-        fieldValueService.saveFieldValues(contentForm, content);
+        try {
+            Content content = contentService.saveContent(contentForm, user);
+            fieldValueService.saveFieldValues(contentForm, content);
+        }catch (Exception e){
+            theModel.addAttribute("errorMessage", e.getMessage());
+
+            return this.showCreateForm(contentTemplateId, theModel, session);
+        }
         return "home";
     }
 }

@@ -127,7 +127,7 @@ public class CommunityController {
 	}
 
 
-	@PostMapping("/searchCommunitySubmit")
+	@GetMapping("/searchCommunitySubmit")
 	public String searchContent(@RequestParam("keyword") String keyword,
 								HttpSession session,
 								Model theModel) {
