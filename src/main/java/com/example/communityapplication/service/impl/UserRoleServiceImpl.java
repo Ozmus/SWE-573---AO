@@ -84,10 +84,33 @@ public class UserRoleServiceImpl implements UserRoleService {
 
 	@Override
 	@Transactional
+	public void leaveCommunity(User userLeaving, Community community) {
+		UserRole userRole = this.getRoleByUserAndCommunityId(new UserRolesId(userLeaving.getId(), community.getId()));
+		if (userRole == null) {
+			throw new IllegalArgumentException("userRole must not be null");
+		}
+		else if (userRole.equals(Role.OWNER) && !isAnotherOwnerExist(community)){
+			throw new IllegalArgumentException("Last owner cannot be deleted");
+		}
+		else {
+			userRoleDao.deleteUserRole(userRole);
+		}
+	}
+
+	@Override
+	@Transactional
 	public void save(UserRole userRole) {
 		if(userRole == null){
 			throw new IllegalArgumentException("UserRole cannot be null");
 		}
 		userRoleDao.save(userRole);
+	}
+
+	private boolean isAnotherOwnerExist(Community community){
+		List<UserRole> userRoles = userRoleDao.findOwnersByCommunityId(community.getId());
+		if(userRoles.size() > 1){
+			return true;
+		}
+		return false;
 	}
 }

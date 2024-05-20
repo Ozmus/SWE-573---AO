@@ -76,6 +76,19 @@ public class CommunityController {
 		theModel.addAttribute("isMember", communityService.isMember(community, (User)session.getAttribute("user")));
 		return "community/community-details";
 	}
+	@PostMapping("/leave")
+	public String leaveCommunity(@RequestParam("name") String name, Model theModel, HttpSession session) {
+		Community community = communityService.getByCommunityName(name);
+
+		theModel.addAttribute("community", community);
+		try {
+			communityService.leaveCommunity(community, (User) session.getAttribute("user"));
+		}catch (Exception e){
+			theModel.addAttribute("isMember", communityService.isMember(community, (User)session.getAttribute("user")));
+			return "community/community-details";
+		}
+		return this.showCommunityPage(theModel);
+	}
 
 	@PostMapping("/processCreateCommunityForm")
 	public String processCreateCommunityForm(
@@ -118,8 +131,15 @@ public class CommunityController {
 			return "community/community-form";
 		}
 
-		// save community
-		communityService.createCommunity(community, (User)session.getAttribute("user"));
+		try {
+			communityService.createCommunity(community, (User)session.getAttribute("user"));
+		} catch (Exception e){
+			theModel.addAttribute("newCommunity", new WebCommunity("", "", false));
+			theModel.addAttribute("communityCreationError", "Community name already exists.");
+
+			logger.warning("Community name already exists.");
+			return "community/community-form";
+		}
 
 		logger.info("Successfully created community: " + communityName);
 

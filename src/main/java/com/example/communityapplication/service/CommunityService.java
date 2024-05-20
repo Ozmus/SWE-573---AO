@@ -14,6 +14,7 @@ public interface CommunityService {
     List<Community> getCommunitiesForManagement(User user);
     void createCommunity(Community community, User currentUser);
     void joinCommunity(Community community, User currentUser);
+    void leaveCommunity(Community community, User currentUser);
     boolean isExist(String name);
     boolean isMember(Community community, User currentUser);
     List<Community> searchCommunities(String keyword);

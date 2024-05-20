@@ -10,6 +10,7 @@ public interface UserRoleDao {
     UserRole findByUserAndCommunityId(UserRolesId userRolesId);
     List<UserRole> findByUserId(long userId);
     List<UserRole> findByCommunityId(int communityId);
+    List<UserRole> findOwnersByCommunityId(int communityId);
     void updateUserRole(UserRole userRole, Role updatedUserRole);
     void deleteUserRole(UserRole userRole);
     void save(UserRole theUserRole);
